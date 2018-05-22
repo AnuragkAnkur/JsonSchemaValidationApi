@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonValidationCoreWebApi", "JsonValidationCoreWebApi\JsonValidationCoreWebApi.csproj", "{F7AF0F3E-B568-4FD5-8139-CBADF846C1BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonValidationCoreWebApi", "JsonValidationCoreWebApi\JsonValidationCoreWebApi.csproj", "{F7AF0F3E-B568-4FD5-8139-CBADF846C1BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{12DE4D70-78A4-41B9-AB12-5D20AFC50253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonValidationCoreWebApi.UnitTests", "JsonValidationCoreWebApi.UnitTests\JsonValidationCoreWebApi.UnitTests.csproj", "{1696D9BA-335D-4072-87A7-684BB855916C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{F7AF0F3E-B568-4FD5-8139-CBADF846C1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7AF0F3E-B568-4FD5-8139-CBADF846C1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7AF0F3E-B568-4FD5-8139-CBADF846C1BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1696D9BA-335D-4072-87A7-684BB855916C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1696D9BA-335D-4072-87A7-684BB855916C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1696D9BA-335D-4072-87A7-684BB855916C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1696D9BA-335D-4072-87A7-684BB855916C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1696D9BA-335D-4072-87A7-684BB855916C} = {12DE4D70-78A4-41B9-AB12-5D20AFC50253}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B5E3DA3E-3F6D-4243-B0AA-310CED55225E}
