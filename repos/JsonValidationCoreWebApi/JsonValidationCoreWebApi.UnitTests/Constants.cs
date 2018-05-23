@@ -17,6 +17,18 @@
                                               }
                                             }";
 
+        public const string SpecialCharacterJson = @"{
+                                              'description': 'œœ œ',
+                                              'type': 'object',
+                                              'properties': {
+                                                'name': {'type':'string'},
+                                                'hobbies': {
+                                                  'type': 'array',
+                                                  'items': {'type':'string'}
+                                                }
+                                              }
+                                            }";
+
         public const string InvalidJson = @"{
                                               'description': 'A person',
                                               'type': 'object',
