@@ -12,24 +12,22 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
 
     public class SchemaValidatorControllerShould
     {
-        private readonly ILogger _logger;
         private readonly SchemaValidatorController _controller;
         private readonly Mock<IJsonValidator> _jsonValidatorMock;
+        private Mock<ILogger> _loggerMock;
 
         public SchemaValidatorControllerShould(ITestOutputHelper outputHelper)
         {
-            _logger = LoggerFactory<SchemaValidatorControllerShould>.CreateLogger(outputHelper);
             _jsonValidatorMock = new Mock<IJsonValidator>();
-            _controller = new SchemaValidatorController(_jsonValidatorMock.Object);
+            _loggerMock = new Mock<ILogger>();
+            _controller = new SchemaValidatorController(_jsonValidatorMock.Object, _loggerMock.Object);
         }
 
         [Fact]
         public void Call_Json_Validator_To_Validate_Schema_Json()
         {
-            var logger = _logger.ForContext("MemberName", MethodBase.GetCurrentMethod().Name);
             _jsonValidatorMock.Setup(x => x.Validate(Constants.ValidJson)).Returns(false);
 
-            logger.Information($"Calling post method of {nameof(SchemaValidatorController)} contoller");
             _controller.Post(Constants.ValidJson);
 
             _jsonValidatorMock.Verify(x => x.Validate(Constants.ValidJson), Times.Once);
@@ -38,13 +36,21 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
         [Fact]
         public void Return_BadRequest_When_Schema_Json_Is_Invalid()
         {
-            var logger = _logger.ForContext("MemberName", MethodBase.GetCurrentMethod().Name);
             _jsonValidatorMock.Setup(x => x.Validate(Constants.InvalidJson)).Returns(false);
 
-            logger.Information($"Calling post method of {nameof(SchemaValidatorController)} contoller");
-            var result = _controller.Post(Constants.ValidJson);
+            var result = _controller.Post(Constants.InvalidJson);
 
             Assert.IsAssignableFrom<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public void Log_Error_When_Schema_Validation_Fails()
+        {
+            _jsonValidatorMock.Setup(x => x.Validate(Constants.InvalidJson)).Returns(false);
+
+            _controller.Post(Constants.InvalidJson);
+
+            _loggerMock.Verify(x => x.Error($"The given schema {Constants.InvalidJson} is not a valid Json"));
         }
     }
 }

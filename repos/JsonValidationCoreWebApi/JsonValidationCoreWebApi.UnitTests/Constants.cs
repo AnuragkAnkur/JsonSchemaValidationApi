@@ -32,7 +32,7 @@
         public const string InvalidJson = @"{
                                               'description': 'A person',
                                               'type': 'object',
-                                              'properties': {
+                                              'properties': 
                                                 'name': {'type':'string'},
                                                 'hobbies': {
                                                   'type': 'array'

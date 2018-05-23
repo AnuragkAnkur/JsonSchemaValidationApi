@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace JsonValidationCoreWebApi.Controllers
 {
@@ -8,10 +9,12 @@ namespace JsonValidationCoreWebApi.Controllers
     public class SchemaValidatorController : Controller
     {
         private readonly IJsonValidator _jsonValidator;
+        private readonly ILogger _logger;
 
-        public SchemaValidatorController(IJsonValidator jsonValidator)
+        public SchemaValidatorController(IJsonValidator jsonValidator, ILogger logger)
         {
             _jsonValidator = jsonValidator;
+            _logger = logger;
         }
 
         // GET api/schemavalidator
@@ -35,8 +38,9 @@ namespace JsonValidationCoreWebApi.Controllers
             var isValid = _jsonValidator.Validate(value);
             if (!isValid)
             {
-                var errorMessage = "Json schema is not a valid Json";
-                var errors = new string[] {errorMessage};
+                var errorMessage = $"The given schema {value} is not a valid Json";
+                var errors = new string[] { errorMessage };
+                _logger.Error(errorMessage);
                 return BadRequest(errors);
             }
 
