@@ -7,8 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace JsonValidationCoreWebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class SchemaValidatorController : Controller
     {
+        private readonly IJsonValidator _jsonValidator;
+
+        public SchemaValidatorController(IJsonValidator jsonValidator)
+        {
+            _jsonValidator = jsonValidator;
+        }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -25,8 +31,17 @@ namespace JsonValidationCoreWebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]string value)
         {
+            var isValid = _jsonValidator.Validate(value);
+            if (!isValid)
+            {
+                var errorMessage = "Json schema is not a valid Json";
+                var errors = new string[] {errorMessage};
+                return BadRequest(errors);
+            }
+
+            return Ok("Schema validation has passed");
         }
 
         // PUT api/values/5
@@ -40,5 +55,10 @@ namespace JsonValidationCoreWebApi.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public interface IJsonValidator
+    {
+        bool Validate(string jsonBody);
     }
 }
