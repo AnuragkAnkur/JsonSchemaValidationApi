@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using JsonValidationCoreWebApi.Controllers;
+using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Serilog;

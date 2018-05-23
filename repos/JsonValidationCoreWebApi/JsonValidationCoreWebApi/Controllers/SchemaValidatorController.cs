@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JsonValidationCoreWebApi.Controllers
@@ -55,10 +56,5 @@ namespace JsonValidationCoreWebApi.Controllers
         public void Delete(int id)
         {
         }
-    }
-
-    public interface IJsonValidator
-    {
-        bool Validate(string jsonBody);
     }
 }
