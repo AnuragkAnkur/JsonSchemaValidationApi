@@ -11,7 +11,8 @@ namespace JsonValidationCoreWebApi.Validators
 
         public JsonValidator(ILogger logger)
         {
-            _logger = logger;
+            _logger = logger
+                        .ForContext<JsonValidator>();
         }
 
         public bool Validate(string jsonBody)
@@ -34,17 +35,6 @@ namespace JsonValidationCoreWebApi.Validators
             }
 
             return true;
-        }
-
-        private static bool IsValidEnding(string jsonBody)
-        {
-            return (jsonBody.EndsWith('}') ||
-                    jsonBody.EndsWith(']'));
-        }
-
-        private static bool IsValidBegining(string jsonBody)
-        {
-            return (jsonBody.StartsWith('{') || jsonBody.StartsWith('['));
         }
     }
 }

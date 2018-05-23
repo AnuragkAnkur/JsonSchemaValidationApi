@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,21 +13,22 @@ namespace JsonValidationCoreWebApi.Controllers
         {
             _jsonValidator = jsonValidator;
         }
-        // GET api/values
+
+        // GET api/schemavalidator
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
+        // GET api/schemavalidator/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
+        // POST api/schemavalidator
         [HttpPost]
         public IActionResult Post([FromBody]string value)
         {
@@ -45,7 +43,7 @@ namespace JsonValidationCoreWebApi.Controllers
             return Ok("Schema validation has passed");
         }
 
-        // PUT api/values/5
+        // PUT api/schemavalidator/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {

@@ -9,12 +9,16 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
     public class JsonValidatorShould
     {
         private readonly JsonValidator _jsonValidator;
-        private Mock<ILogger> _loggerMock;
+        private readonly Mock<ILogger> _loggerMock;
 
         public JsonValidatorShould()
         {
             _loggerMock = new Mock<ILogger>();
-            _jsonValidator = new JsonValidator(_loggerMock.Object);
+            var loggerMockObject = _loggerMock.Object;
+            _loggerMock.Setup(x => x.ForContext<JsonValidator>())
+                .Returns(loggerMockObject);
+
+            _jsonValidator = new JsonValidator(loggerMockObject);
         }
 
         [Fact]
