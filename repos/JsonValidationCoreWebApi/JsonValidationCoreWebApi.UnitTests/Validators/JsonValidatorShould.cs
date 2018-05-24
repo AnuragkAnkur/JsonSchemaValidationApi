@@ -25,7 +25,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         public void Return_False_When_Json_Is_Empty()
         {
 
-            var result = _jsonValidator.Validate("");
+            var result = _jsonValidator.ValidateJson("");
 
             Assert.False(result, "Json was incorrect. Validation reseult should be negative");
         }
@@ -33,7 +33,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         [Fact]
         public void Return_False_When_Json_Is_Null()
         {
-            var result = _jsonValidator.Validate(null);
+            var result = _jsonValidator.ValidateJson(null);
 
             Assert.False(result, "Json was incorrect. Validation reseult should be negative");
         }
@@ -41,28 +41,28 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         [Fact]
         public void Return_False_When_Json_Is_InValid()
         {
-            var result = _jsonValidator.Validate(Constants.InvalidJson);
+            var result = _jsonValidator.ValidateJson(Constants.InvalidJson);
             Assert.False(result, "Json was incorrect. Validation reseult should be negative");
         }
 
         [Fact]
         public void Log_Error_When_Json_Is_InValid()
         {
-            _jsonValidator.Validate(Constants.InvalidJson);
+            _jsonValidator.ValidateJson(Constants.InvalidJson);
             _loggerMock.Verify(x => x.Error(It.IsAny<JsonReaderException>(), "Provided string is an invalid json"));
         }
 
         [Fact]
         public void Return_True_When_Json_Is_Valid()
         {
-            var result = _jsonValidator.Validate(Constants.ValidJson);
+            var result = _jsonValidator.ValidateJson(Constants.ValidJson);
             Assert.True(result, "Json was incorrect. Validation reseult should be positive");
         }
 
         [Fact]
         public void Return_True_When_Json_Contains_Special_Character()
         {
-            var result = _jsonValidator.Validate(Constants.SpecialCharacterJson);
+            var result = _jsonValidator.ValidateJson(Constants.SpecialCharacterJson);
             Assert.True(result, "Json was incorrect. Validation reseult should be positive");
         }
     }

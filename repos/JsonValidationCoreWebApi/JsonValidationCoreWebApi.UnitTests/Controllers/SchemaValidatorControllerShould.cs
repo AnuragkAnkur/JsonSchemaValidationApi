@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using JsonValidationCoreWebApi.Controllers;
+using JsonValidationCoreWebApi.HttpClients;
+using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -14,31 +16,54 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
     {
         private readonly SchemaValidatorController _controller;
         private readonly Mock<IJsonValidator> _jsonValidatorMock;
-        private Mock<ILogger> _loggerMock;
+        private readonly Mock<ILogger> _loggerMock;
+        private readonly Mock<IRestApiClient> _restApiClientMock;
+        private readonly string _apiEndpoint;
+        private readonly RestApiResponse _restApiResponse;
 
-        public SchemaValidatorControllerShould(ITestOutputHelper outputHelper)
+        public SchemaValidatorControllerShould()
         {
             _jsonValidatorMock = new Mock<IJsonValidator>();
             _loggerMock = new Mock<ILogger>();
-            _controller = new SchemaValidatorController(_jsonValidatorMock.Object, _loggerMock.Object);
+            _apiEndpoint = "http://localhost:7675";
+            _restApiResponse = new RestApiResponse()
+            {
+                Data = string.Empty
+            };
+
+            _restApiClientMock = new Mock<IRestApiClient>();
+            _restApiClientMock.Setup(x => x.GetDataFromUrl(_apiEndpoint)).Returns(_restApiResponse);
+            _controller = new SchemaValidatorController(_jsonValidatorMock.Object, _loggerMock.Object, _restApiClientMock.Object);
         }
 
         [Fact]
         public void Call_Json_Validator_To_Validate_Schema_Json()
         {
-            _jsonValidatorMock.Setup(x => x.Validate(Constants.ValidJson)).Returns(false);
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(false);
 
-            _controller.Post(Constants.ValidJson);
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.ValidJson,
+                Site = _apiEndpoint
+            };
 
-            _jsonValidatorMock.Verify(x => x.Validate(Constants.ValidJson), Times.Once);
+            _controller.Post(validateSchemaModel);
+
+            _jsonValidatorMock.Verify(x => x.ValidateJson(Constants.ValidJson), Times.Once);
         }
 
         [Fact]
         public void Return_BadRequest_When_Schema_Json_Is_Invalid()
         {
-            _jsonValidatorMock.Setup(x => x.Validate(Constants.InvalidJson)).Returns(false);
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.InvalidJson)).Returns(false);
 
-            var result = _controller.Post(Constants.InvalidJson);
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.ValidJson,
+                Site = _apiEndpoint
+            };
+
+            var result = _controller.Post(validateSchemaModel);
 
             Assert.IsAssignableFrom<BadRequestObjectResult>(result);
         }
@@ -46,11 +71,65 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
         [Fact]
         public void Log_Error_When_Schema_Validation_Fails()
         {
-            _jsonValidatorMock.Setup(x => x.Validate(Constants.InvalidJson)).Returns(false);
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.InvalidJson)).Returns(false);
 
-            _controller.Post(Constants.InvalidJson);
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.InvalidJson,
+                Site = _apiEndpoint
+            };
+
+            _controller.Post(validateSchemaModel);
 
             _loggerMock.Verify(x => x.Error($"The given schema {Constants.InvalidJson} is not a valid Json"));
+        }
+
+        [Fact]
+        public void Return_OK_When_Schema_Json_Is_Valid()
+        {
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.ValidJson,
+                Site = _apiEndpoint
+            };
+
+            var result =  _controller.Post(validateSchemaModel);
+
+            Assert.IsAssignableFrom<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void Call_Rest_Api_Client_To_Get_Data_From_A_Given_Api_Endpoint()
+        {
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.ValidJson,
+                Site = _apiEndpoint
+            };
+
+            _controller.Post(validateSchemaModel);
+
+            _restApiClientMock.Verify(x => x.GetDataFromUrl(validateSchemaModel.Site), Times.Once);
+        }
+
+        [Fact]
+        public void Validate_Response_Returned_By_A_Rest_Api_Against_A_Given_Json_Schema()
+        {
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.ValidJson,
+                Site = _apiEndpoint
+            };
+
+            _controller.Post(validateSchemaModel);
+
+            _jsonValidatorMock.Verify(x => x.ValidateJsonAgainstSchema(validateSchemaModel.Schema, _restApiResponse.Data), Times.Once);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using JsonValidationCoreWebApi.HttpClients;
+using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -10,11 +12,13 @@ namespace JsonValidationCoreWebApi.Controllers
     {
         private readonly IJsonValidator _jsonValidator;
         private readonly ILogger _logger;
+        private readonly IRestApiClient _restApiClient;
 
-        public SchemaValidatorController(IJsonValidator jsonValidator, ILogger logger)
+        public SchemaValidatorController(IJsonValidator jsonValidator, ILogger logger, IRestApiClient restApiClient)
         {
             _jsonValidator = jsonValidator;
             _logger = logger;
+            _restApiClient = restApiClient;
         }
 
         // GET api/schemavalidator
@@ -24,39 +28,23 @@ namespace JsonValidationCoreWebApi.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/schemavalidator/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/schemavalidator
         [HttpPost]
-        public IActionResult Post([FromBody]string value)
+        public IActionResult Post([FromBody]ValidateSchemaModel model)
         {
-            var isValid = _jsonValidator.Validate(value);
+            var isValid = _jsonValidator.ValidateJson(model.Schema);
             if (!isValid)
             {
-                var errorMessage = $"The given schema {value} is not a valid Json";
+                var errorMessage = $"The given schema {model.Schema} is not a valid Json";
                 var errors = new string[] { errorMessage };
                 _logger.Error(errorMessage);
                 return BadRequest(errors);
             }
 
+            var restApiResponse = _restApiClient.GetDataFromUrl(model.Site);
+            _jsonValidator.ValidateJsonAgainstSchema(model.Schema, restApiResponse.Data);
+
             return Ok("Schema validation has passed");
-        }
-
-        // PUT api/schemavalidator/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

@@ -15,7 +15,7 @@ namespace JsonValidationCoreWebApi.Validators
                         .ForContext<JsonValidator>();
         }
 
-        public bool Validate(string jsonBody)
+        public bool ValidateJson(string jsonBody)
         {
             if (string.IsNullOrEmpty(jsonBody))
             {
@@ -34,6 +34,11 @@ namespace JsonValidationCoreWebApi.Validators
                 return false;
             }
 
+            return true;
+        }
+
+        public bool ValidateJsonAgainstSchema(string validJson, string data)
+        {
             return true;
         }
     }

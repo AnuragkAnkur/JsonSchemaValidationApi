@@ -2,6 +2,8 @@
 {
     public interface IJsonValidator
     {
-        bool Validate(string jsonBody);
+        bool ValidateJson(string jsonBody);
+
+        bool ValidateJsonAgainstSchema(string validJson, string data);
     }
 }

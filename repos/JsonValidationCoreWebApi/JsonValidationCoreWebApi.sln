@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{12DE4D70
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonValidationCoreWebApi.UnitTests", "JsonValidationCoreWebApi.UnitTests\JsonValidationCoreWebApi.UnitTests.csproj", "{1696D9BA-335D-4072-87A7-684BB855916C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonValidationCoreWebApi.IntegrationTests", "JsonValidationCoreWebApi.IntegrationTests\JsonValidationCoreWebApi.IntegrationTests.csproj", "{E76457C0-2066-4273-BC1B-E0E4D061CFEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{1696D9BA-335D-4072-87A7-684BB855916C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1696D9BA-335D-4072-87A7-684BB855916C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1696D9BA-335D-4072-87A7-684BB855916C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E76457C0-2066-4273-BC1B-E0E4D061CFEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E76457C0-2066-4273-BC1B-E0E4D061CFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E76457C0-2066-4273-BC1B-E0E4D061CFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E76457C0-2066-4273-BC1B-E0E4D061CFEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1696D9BA-335D-4072-87A7-684BB855916C} = {12DE4D70-78A4-41B9-AB12-5D20AFC50253}
+		{E76457C0-2066-4273-BC1B-E0E4D061CFEB} = {12DE4D70-78A4-41B9-AB12-5D20AFC50253}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B5E3DA3E-3F6D-4243-B0AA-310CED55225E}
