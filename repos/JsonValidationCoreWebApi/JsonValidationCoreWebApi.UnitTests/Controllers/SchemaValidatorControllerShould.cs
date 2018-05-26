@@ -1,10 +1,13 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Reflection;
 using JsonValidationCoreWebApi.Controllers;
 using JsonValidationCoreWebApi.HttpClients;
 using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json.Schema;
 using Serilog;
 using Xunit;
 using Xunit.Abstractions;
@@ -88,6 +91,14 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
         public void Return_OK_When_Schema_Json_Is_Valid()
         {
             _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+            _jsonValidatorMock.Setup(x => x.ValidateJsonAgainstSchema(Constants.ValidJson, _restApiResponse.Data))
+                .Returns(
+                    new SchemaValidationResult()
+                    {
+                        SuccessfullyParsedObjectsCount = 1,
+                        SchemaValidationErrors = new List<SchemaValidationError>()
+                    }
+                );
 
             var validateSchemaModel = new ValidateSchemaModel()
             {
@@ -101,9 +112,52 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
         }
 
         [Fact]
+        public void Return_Conflict_When_Schema_Validation_Fails()
+        {
+            _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+            _jsonValidatorMock.Setup(x => x.ValidateJsonAgainstSchema(Constants.ValidJson, _restApiResponse.Data))
+                .Returns(
+                    new SchemaValidationResult()
+                    {
+                        SuccessfullyParsedObjectsCount = 0,
+                        SchemaValidationErrors = new List<SchemaValidationError>()
+                        {
+                            new SchemaValidationError()
+                            {
+                                ErrorType = ErrorType.Type,
+                                Message = "Test Error",
+                                Value = null
+                            }
+                        }
+                    }
+                );
+
+            var validateSchemaModel = new ValidateSchemaModel()
+            {
+                Schema = Constants.ValidJson,
+                Site = _apiEndpoint
+            };
+
+            var result = _controller.Post(validateSchemaModel);
+
+            Assert.IsAssignableFrom<ContentResult>(result);
+            var contentResult = (ContentResult) result;
+            Assert.Equal((int)HttpStatusCode.Conflict , contentResult.StatusCode.Value);
+        }
+
+        [Fact]
         public void Call_Rest_Api_Client_To_Get_Data_From_A_Given_Api_Endpoint()
         {
             _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+            _jsonValidatorMock.Setup(x => x.ValidateJsonAgainstSchema(Constants.ValidJson, _restApiResponse.Data))
+                .Returns(
+                    new SchemaValidationResult()
+                    {
+                        SuccessfullyParsedObjectsCount = 1,
+                        SchemaValidationErrors = new List<SchemaValidationError>()
+                    }
+                );
+
 
             var validateSchemaModel = new ValidateSchemaModel()
             {
@@ -120,6 +174,14 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
         public void Validate_Response_Returned_By_A_Rest_Api_Against_A_Given_Json_Schema()
         {
             _jsonValidatorMock.Setup(x => x.ValidateJson(Constants.ValidJson)).Returns(true);
+            _jsonValidatorMock.Setup(x => x.ValidateJsonAgainstSchema(Constants.ValidJson, _restApiResponse.Data))
+                .Returns(
+                    new SchemaValidationResult()
+                    {
+                        SuccessfullyParsedObjectsCount = 1,
+                        SchemaValidationErrors = new List<SchemaValidationError>()
+                    }
+                );
 
             var validateSchemaModel = new ValidateSchemaModel()
             {

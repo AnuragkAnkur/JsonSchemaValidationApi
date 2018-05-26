@@ -4,6 +4,7 @@ using JsonValidationCoreWebApi.HttpClients;
 using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace JsonValidationCoreWebApi.Controllers
@@ -42,9 +43,23 @@ namespace JsonValidationCoreWebApi.Controllers
                 return BadRequest(errors);
             }
 
+            _logger.Information($"Calling Url: {model.Site}");
             var restApiResponse = _restApiClient.GetDataFromUrl(model.Site);
-            var validationErrors = _jsonValidator.ValidateJsonAgainstSchema(model.Schema, restApiResponse.Data);
-            return Ok("Schema validation has passed");
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(model.Schema, restApiResponse.Data);
+            var responseContent = JsonConvert.SerializeObject(schemaValidationResult);
+
+            if (schemaValidationResult.SchemaValidationErrors.Any())
+            {
+                _logger.Error($"Validation Result: \n {responseContent}");
+                return new ContentResult()
+                {
+                    StatusCode = 409,
+                    Content = responseContent
+                };
+            }
+
+            _logger.Information($"Validation Result: \n {responseContent}");
+            return Ok(responseContent);
         }
     }
 }

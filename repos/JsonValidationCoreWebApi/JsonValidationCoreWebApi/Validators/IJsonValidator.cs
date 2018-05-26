@@ -7,6 +7,6 @@ namespace JsonValidationCoreWebApi.Validators
     {
         bool ValidateJson(string jsonBody);
 
-        IList<SchemaValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data);
+        SchemaValidationResult ValidateJsonAgainstSchema(string jsonSchema, string data);
     }
 }

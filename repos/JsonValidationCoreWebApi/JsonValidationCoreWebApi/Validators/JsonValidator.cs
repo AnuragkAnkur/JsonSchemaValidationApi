@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using JsonValidationCoreWebApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -40,7 +41,7 @@ namespace JsonValidationCoreWebApi.Validators
             return true;
         }
 
-        public IList<SchemaValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data)
+        public SchemaValidationResult ValidateJsonAgainstSchema(string jsonSchema, string data)
         {
             var schema = JSchema.Parse(jsonSchema.Trim());
 
@@ -50,6 +51,25 @@ namespace JsonValidationCoreWebApi.Validators
 
             jsonData.IsValid(schema, out validationErrors);
 
+            var listOfErrors = FilterNullValueError(validationErrors);
+
+            var schemaValidationResult = new SchemaValidationResult()
+            {
+                SchemaValidationErrors = listOfErrors
+            };
+
+            if (!listOfErrors.Any())
+            {
+                var successfullyParsedObjectsCount = jsonData.Children().Count();
+                _logger.Information($"Number Of object parsed = {successfullyParsedObjectsCount} for schema \n {jsonSchema}");
+                schemaValidationResult.SuccessfullyParsedObjectsCount = successfullyParsedObjectsCount;
+            }
+
+            return schemaValidationResult;
+        }
+
+        private List<SchemaValidationError> FilterNullValueError(IList<ValidationError> validationErrors)
+        {
             var listOfErrors = new List<SchemaValidationError>();
             foreach (var error in validationErrors)
             {

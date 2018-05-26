@@ -85,11 +85,12 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
                               'roles': ['Developer', 'Administrator']
                             }";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(1, listOfErrors.Count);
-            Assert.Equal("Arnie Admin", listOfErrors.First().Value);
-            Assert.Equal(ErrorType.Type, listOfErrors.First().ErrorType);
+            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
+            Assert.Equal("Arnie Admin", schemaValidationResult.SchemaValidationErrors.First().Value);
+            Assert.Equal(ErrorType.Type, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
 
         [Fact]
@@ -106,11 +107,14 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var json = @"{}";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(1, listOfErrors.Count);
-            Assert.Contains("Required properties are missing from object: name.", listOfErrors.First().Message);
-            Assert.Equal(ErrorType.Required, listOfErrors.First().ErrorType);
+            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
+            Assert.Contains("Required properties are missing from object: name.",
+                schemaValidationResult.SchemaValidationErrors.First().Message);
+
+            Assert.Equal(ErrorType.Required, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
 
         [Fact]
@@ -123,9 +127,10 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
             
             var json = @"['Chilean', 'Argentinean', 'Peruvian', 'Colombian']";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
-            
-            Assert.False(listOfErrors.Any());
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+
+            Assert.Equal(4, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.False(schemaValidationResult.SchemaValidationErrors.Any());
         }
 
         [Fact]
@@ -146,10 +151,11 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
                               'roles': ['Developer', 'Administrator']
                             }";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(1, listOfErrors.Count);
-            Assert.Equal(ErrorType.AdditionalProperties, listOfErrors.First().ErrorType);
+            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
+            Assert.Equal(ErrorType.AdditionalProperties, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
 
         [Fact]
@@ -163,10 +169,11 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var json = @"[]";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(1, listOfErrors.Count);
-            Assert.Equal(ErrorType.MinimumItems, listOfErrors.First().ErrorType);
+            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
+            Assert.Equal(ErrorType.MinimumItems, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
 
         [Fact]
@@ -179,9 +186,10 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var json = @"[1, null, 1, 2]";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.False(listOfErrors.Any());
+            Assert.Equal(4, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.False(schemaValidationResult.SchemaValidationErrors.Any());
         }
 
         [Fact]
@@ -196,9 +204,10 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            _loggerMock.Verify(x => x.Warning("Encountered 'Null' value at line number 1and position 8." +
+            _loggerMock.Verify(x => 
+                    x.Warning("Encountered 'Null' value at line number 1and position 8." +
                                               "Error Message: Invalid type. Expected Number but got Null."),
-                Times.Once());
+            Times.Once());
         }
 
         [Fact]
@@ -211,10 +220,11 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var json = @"{}";
 
-            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+            var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(1, listOfErrors.Count);
-            Assert.Equal(ErrorType.MinimumProperties, listOfErrors.First().ErrorType);
+            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
+            Assert.Equal(ErrorType.MinimumProperties, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
     }
 }
