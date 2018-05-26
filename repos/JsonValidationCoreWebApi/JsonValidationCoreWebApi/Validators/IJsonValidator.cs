@@ -1,9 +1,12 @@
-﻿namespace JsonValidationCoreWebApi.Validators
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Schema;
+
+namespace JsonValidationCoreWebApi.Validators
 {
     public interface IJsonValidator
     {
         bool ValidateJson(string jsonBody);
 
-        bool ValidateJsonAgainstSchema(string validJson, string data);
+        IList<ValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data);
     }
 }

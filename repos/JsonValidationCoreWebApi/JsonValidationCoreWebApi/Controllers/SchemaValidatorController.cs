@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JsonValidationCoreWebApi.HttpClients;
 using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
@@ -25,25 +26,24 @@ namespace JsonValidationCoreWebApi.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] {"value1", "value2"};
         }
 
         // POST api/schemavalidator
         [HttpPost]
-        public IActionResult Post([FromBody]ValidateSchemaModel model)
+        public IActionResult Post([FromBody] ValidateSchemaModel model)
         {
             var isValid = _jsonValidator.ValidateJson(model.Schema);
             if (!isValid)
             {
                 var errorMessage = $"The given schema {model.Schema} is not a valid Json";
-                var errors = new string[] { errorMessage };
+                var errors = new string[] {errorMessage};
                 _logger.Error(errorMessage);
                 return BadRequest(errors);
             }
 
             var restApiResponse = _restApiClient.GetDataFromUrl(model.Site);
-            _jsonValidator.ValidateJsonAgainstSchema(model.Schema, restApiResponse.Data);
-
+            var validationErrors = _jsonValidator.ValidateJsonAgainstSchema(model.Schema, restApiResponse.Data);
             return Ok("Schema validation has passed");
         }
     }

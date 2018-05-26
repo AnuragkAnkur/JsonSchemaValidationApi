@@ -1,6 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using Serilog;
 
 namespace JsonValidationCoreWebApi.Validators
@@ -37,9 +39,17 @@ namespace JsonValidationCoreWebApi.Validators
             return true;
         }
 
-        public bool ValidateJsonAgainstSchema(string validJson, string data)
+        public IList<ValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data)
         {
-            return true;
+            var schema = JSchema.Parse(jsonSchema.Trim());
+
+            var jsonData = JToken.Parse(data.Trim());
+
+            IList<ValidationError> errorList = new List<ValidationError>();
+
+            jsonData.IsValid(schema, out errorList);
+
+            return errorList;
         }
     }
 }
