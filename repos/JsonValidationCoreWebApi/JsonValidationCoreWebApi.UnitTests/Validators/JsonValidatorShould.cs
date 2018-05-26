@@ -174,15 +174,47 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         {
             var schema = @"{
                             'type': 'array',
-                            'items': {'type': 'string'}
+                            'items': {'type': 'number'}
                             }";
 
-            var json = @"['Chilean', null, 'Peruvian', 'Colombian']";
+            var json = @"[1, null, 1, 2]";
 
             var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
             Assert.False(listOfErrors.Any());
         }
 
+        [Fact]
+        public void Print_Encoutered_Null_Occurances()
+        {
+            var schema = @"{
+                            'type': 'array',
+                            'items': {'type': 'number'}
+                            }";
+
+            var json = @"[1, null, 1, 2]";
+
+            _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+
+            _loggerMock.Verify(x => x.Warning("Encountered 'Null' value at line number 1and position 8." +
+                                              "Error Message: Invalid type. Expected Number but got Null."),
+                Times.Once());
+        }
+
+        [Fact]
+        public void Return_MinimumProperties_Error_When_Json_Is_Empty()
+        {
+            var schema = @"{
+                            'type': 'object',
+                            'minProperties' : 1
+                            }";
+
+            var json = @"{}";
+
+            var listOfErrors = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
+
+            Assert.Equal(1, listOfErrors.Count);
+            Assert.Equal(ErrorType.MinimumProperties, listOfErrors.First().ErrorType);
+        }
     }
 }

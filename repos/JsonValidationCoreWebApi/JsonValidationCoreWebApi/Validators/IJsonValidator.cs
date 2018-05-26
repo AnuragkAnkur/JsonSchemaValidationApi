@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json.Schema;
+using JsonValidationCoreWebApi.Models;
 
 namespace JsonValidationCoreWebApi.Validators
 {
@@ -7,6 +7,6 @@ namespace JsonValidationCoreWebApi.Validators
     {
         bool ValidateJson(string jsonBody);
 
-        IList<ValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data);
+        IList<SchemaValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data);
     }
 }

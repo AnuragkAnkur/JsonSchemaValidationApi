@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using JsonValidationCoreWebApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -39,17 +40,38 @@ namespace JsonValidationCoreWebApi.Validators
             return true;
         }
 
-        public IList<ValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data)
+        public IList<SchemaValidationError> ValidateJsonAgainstSchema(string jsonSchema, string data)
         {
             var schema = JSchema.Parse(jsonSchema.Trim());
 
             var jsonData = JToken.Parse(data.Trim());
 
-            IList<ValidationError> errorList = new List<ValidationError>();
+            IList<ValidationError> validationErrors = new List<ValidationError>();
 
-            jsonData.IsValid(schema, out errorList);
+            jsonData.IsValid(schema, out validationErrors);
 
-            return errorList;
+            var listOfErrors = new List<SchemaValidationError>();
+            foreach (var error in validationErrors)
+            {
+                if (error.ErrorType == ErrorType.Type)
+                {
+                    if (error.Value == null)
+                    {
+                        _logger.Warning($"Encountered 'Null' value at line number {error.LineNumber}" +
+                                        $"and position {error.LinePosition}.Error Message: {error.Message}");
+                        continue;
+                    }
+                }
+
+                listOfErrors.Add(new SchemaValidationError()
+                {
+                    ErrorType = error.ErrorType,
+                    Message = error.Message,
+                    Value = error.Value
+                });
+            }
+
+            return listOfErrors;
         }
     }
 }
