@@ -1,0 +1,67 @@
+2018-05-27 02:35:36.970 [Information]  : -> Calling Url: https://git.io/vpg95
+2018-05-27 02:35:39.079 [Error]  : -> Validation Result: 
+ {"SchemaValidationErrors":[{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":92944,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":92956,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":92968,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":92980,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":92992,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93004,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93016,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93028,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93040,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93052,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93064,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93076,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93088,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93100,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93112,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93124,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93136,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93148,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93160,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93172,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93184,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93196,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93208,"LinePosition":3},{"ErrorType":14,"Message":"Required properties are missing from object: country.","Value":[],"LineNumber":93220,"LinePosition":3}],"SuccessfullyParsedObjectsCount":0}
+2018-05-27 11:35:37.509 [Information]  : -> Calling Url: https://git.io/vpg95
+2018-05-27 11:35:39.234 [Information] JsonValidationCoreWebApi.Validators.JsonValidator : -> Number Of object parsed = 9664 for schema 
+ {
+  "type": "array",
+  "items": {
+    "type": [
+      "object",
+      "null"
+    ],
+    "properties": {
+      "web_pages": {
+        "type": "array",
+        "items": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "name": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "alpha_two_code": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "state-province": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "domains": {
+        "type": "array",
+        "items": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "country": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "web_pages",
+      "name",
+      "alpha_two_code",
+      "state-province",
+      "domains"
+    ]
+  }
+}
+2018-05-27 11:35:39.311 [Information]  : -> Validation Result: 
+ {"SchemaValidationErrors":[],"SuccessfullyParsedObjectsCount":9664}

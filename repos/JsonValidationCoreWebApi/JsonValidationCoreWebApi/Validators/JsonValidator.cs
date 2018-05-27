@@ -76,8 +76,9 @@ namespace JsonValidationCoreWebApi.Validators
                 {
                     if (error.Value == null)
                     {
-                        _logger.Warning($"Encountered 'Null' value at line number {error.LineNumber}" +
-                                        $"and position {error.LinePosition}.Error Message: {error.Message}");
+                        _logger.Warning($"Encountered 'Null' value at line number {error.LineNumber} " +
+                                        $"and position {error.LinePosition} for Property {error.Path}." +
+                                        $"\nError Message: {error.Message}");
                         continue;
                     }
                 }
@@ -86,7 +87,10 @@ namespace JsonValidationCoreWebApi.Validators
                 {
                     ErrorType = error.ErrorType,
                     Message = error.Message,
-                    Value = error.Value
+                    Path = error.Path,
+                    Value = error.Value,
+                    LineNumber = error.LineNumber,
+                    LinePosition = error.LinePosition
                 });
             }
 

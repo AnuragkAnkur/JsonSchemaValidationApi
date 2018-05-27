@@ -124,7 +124,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
                             {
                                 ErrorType = ErrorType.Type,
                                 Message = "Test Error",
-                                Value = null
+                                Path = null
                             }
                         }
                     }

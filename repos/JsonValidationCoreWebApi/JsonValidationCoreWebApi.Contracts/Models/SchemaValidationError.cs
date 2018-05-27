@@ -8,6 +8,12 @@ namespace JsonValidationCoreWebApi.Contracts.Models
 
         public string Message { get; set; }
 
+        public string Path { get; set; }
+
+        public int LineNumber { get; set; }
+
+        public int LinePosition { get; set; }
+
         public object Value { get; set; }
     }
 }
