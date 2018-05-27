@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using JsonValidationCoreWebApi.Contracts.Models;
 using JsonValidationCoreWebApi.HttpClients;
 using JsonValidationCoreWebApi.Validators;
@@ -32,16 +30,15 @@ namespace JsonValidationCoreWebApi.Controllers
             if (!isValid)
             {
                 var errorMessage = $"The given schema {model.Schema} is not a valid Json";
-                var errors = new string[] {errorMessage};
                 _logger.Error(errorMessage);
-                return BadRequest(errors);
+                return BadRequest(new[] {errorMessage});
             }
 
-            _logger.Information($"Calling Url: {model.Site}");
+            _logger.Information($"Calling Url: {model.Site} to get JSon data");
             var restApiResponse = _restApiClient.GetDataFromUrl(model.Site);
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(model.Schema, restApiResponse.Data);
-            var responseContent = JsonConvert.SerializeObject(schemaValidationResult);
 
+            var responseContent = JsonConvert.SerializeObject(schemaValidationResult);
             if (schemaValidationResult.SchemaValidationErrors.Any())
             {
                 _logger.Error($"Validation Result: \n {responseContent}");
