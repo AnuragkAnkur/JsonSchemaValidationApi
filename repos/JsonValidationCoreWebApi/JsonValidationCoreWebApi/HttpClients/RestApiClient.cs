@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-using JsonValidationCoreWebApi.Models;
+using JsonValidationCoreWebApi.Contracts.Models;
 
 namespace JsonValidationCoreWebApi.HttpClients
 {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using JsonValidationCoreWebApi.Models;
+﻿using JsonValidationCoreWebApi.Contracts.Models;
 
 namespace JsonValidationCoreWebApi.Validators
 {

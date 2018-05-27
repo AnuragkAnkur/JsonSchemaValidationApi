@@ -1,4 +1,4 @@
-﻿namespace JsonValidationCoreWebApi.Models
+﻿namespace JsonValidationCoreWebApi.Contracts.Models
 {
     public class RestApiResponse
     {

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Schema">
+      <HintPath>..\..\..\..\.nuget\packages\newtonsoft.json.schema\3.0.10\lib\netstandard2.0\Newtonsoft.Json.Schema.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -5,20 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotnet-xunit" Version="2.3.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
-    <PackageReference Include="Moq" Version="4.8.2" />
-    <PackageReference Include="Serilog" Version="2.7.1" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.10" />
     <PackageReference Include="Serilog.Sinks.XunitTestOutput" Version="1.0.14" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+
+    <PackageReference Include="dotnet-xunit" Version="2.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JsonValidationCoreWebApi.Contracts\JsonValidationCoreWebApi.Contracts.csproj" />
-    <ProjectReference Include="..\JsonValidationCoreWebApi\JsonValidationCoreWebApi.csproj" />
   </ItemGroup>
 
 </Project>

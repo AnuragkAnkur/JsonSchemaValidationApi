@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using System.Reflection;
+using JsonValidationCoreWebApi.Contracts.Models;
 using JsonValidationCoreWebApi.Controllers;
 using JsonValidationCoreWebApi.HttpClients;
-using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json.Schema;
 using Serilog;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace JsonValidationCoreWebApi.UnitTests.Controllers
 {

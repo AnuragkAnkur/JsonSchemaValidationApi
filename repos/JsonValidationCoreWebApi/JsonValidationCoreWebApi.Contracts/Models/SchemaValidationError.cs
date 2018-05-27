@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Schema;
 
-namespace JsonValidationCoreWebApi.Models
+namespace JsonValidationCoreWebApi.Contracts.Models
 {
     public class SchemaValidationError
     {

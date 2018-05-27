@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using JsonValidationCoreWebApi.Contracts.Models;
 using JsonValidationCoreWebApi.HttpClients;
-using JsonValidationCoreWebApi.Models;
 using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -21,13 +22,6 @@ namespace JsonValidationCoreWebApi.Controllers
             _jsonValidator = jsonValidator;
             _logger = logger;
             _restApiClient = restApiClient;
-        }
-
-        // GET api/schemavalidator
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] {"value1", "value2"};
         }
 
         // POST api/schemavalidator
@@ -59,7 +53,7 @@ namespace JsonValidationCoreWebApi.Controllers
             }
 
             _logger.Information($"Validation Result: \n {responseContent}");
-            return Ok(responseContent);
+            return Ok(schemaValidationResult);
         }
     }
 }

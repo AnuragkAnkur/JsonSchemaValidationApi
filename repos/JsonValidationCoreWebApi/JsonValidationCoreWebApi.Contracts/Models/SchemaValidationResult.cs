@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace JsonValidationCoreWebApi.Models
+namespace JsonValidationCoreWebApi.Contracts.Models
 {
     public class SchemaValidationResult
     {
-        public IList<SchemaValidationError> SchemaValidationErrors { get; set; }
+        public List<SchemaValidationError> SchemaValidationErrors { get; set; }
 
         public int SuccessfullyParsedObjectsCount { get; set; }
     }

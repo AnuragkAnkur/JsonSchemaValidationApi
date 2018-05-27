@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;

@@ -1,4 +1,5 @@
-﻿using JsonValidationCoreWebApi.Validators;
+﻿using JsonValidationCoreWebApi.HttpClients;
+using JsonValidationCoreWebApi.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,7 @@ namespace JsonValidationCoreWebApi
 
             services.AddTransient<ILogger>(provider => Log.Logger);
             services.AddSingleton<IJsonValidator, JsonValidator>();
+            services.AddSingleton<IRestApiClient, RestApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

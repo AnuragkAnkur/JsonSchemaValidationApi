@@ -1,4 +1,4 @@
-﻿using JsonValidationCoreWebApi.Models;
+﻿using JsonValidationCoreWebApi.Contracts.Models;
 
 namespace JsonValidationCoreWebApi.HttpClients
 {
