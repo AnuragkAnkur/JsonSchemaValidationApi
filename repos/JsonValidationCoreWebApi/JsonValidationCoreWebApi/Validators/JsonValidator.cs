@@ -80,9 +80,9 @@ namespace JsonValidationCoreWebApi.Validators
                     if (error.Value == null)
                     {
                         nullOccuranceCount++;
-                        _logger.Warning($"Encountered 'Null' value at line number {error.LineNumber} " +
+                        /*_logger.Warning($"Encountered 'Null' value at line number {error.LineNumber} " +
                                         $"and position {error.LinePosition} for Property {error.Path}." +
-                                        $"\nError Message: {error.Message}");
+                                        $"\nError Message: {error.Message}");*/
                         continue;
                     }
                 }

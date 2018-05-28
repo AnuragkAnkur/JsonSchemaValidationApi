@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using System;
+using System.IO;
+using Serilog;
 
 namespace JsonValidationCoreWebApi
 {
@@ -11,10 +13,10 @@ namespace JsonValidationCoreWebApi
         {
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.RollingFile("c:\\JsonValidationCoreWebApi-log-{Date}.txt"
+                .WriteTo.RollingFile("D:\\Logs\\JsonValidationCoreWebApi-log-{Date}.txt"
                     , outputTemplate: MessageTemplate
                     , fileSizeLimitBytes:null)
-                .WriteTo.Console(outputTemplate: MessageTemplate)
+                .WriteTo.Console(outputTemplate: MessageTemplate)   
                 .CreateLogger();
 
             return logger;
