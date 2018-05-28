@@ -39,9 +39,9 @@ The web API has got three main classes each responsible for the following purpos
     5. BuildScript.cmd is located at .\repo\tools\BuildScript.cmd
 
 # **Steps to run BuildScript.cmd**
-    1. Open command prompt in admin mode
+    1. Open command prompt in admin mode because it creates service
     2. cd to .\repo directory
-    3. Run .\toos\BuildScript.cmd
+    3. Run .\tools\BuildScript.cmd
 
     
 # **Web API Request Example**
