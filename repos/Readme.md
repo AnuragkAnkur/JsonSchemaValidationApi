@@ -42,6 +42,16 @@ The web API has got three main classes each responsible for the following purpos
     1. Open command prompt in admin mode because it creates service
     2. cd to .\repo directory
     3. Run .\tools\BuildScript.cmd
+ **This build script will** 
+ 
+     1.Compile the solution.
+     2. Run the unit tests
+     3. Run the integration tests
+     4. Publish the package
+     5. Install the web api as a windows service
+     6. Start the service
+     7. Run the acceptance tests.
+
 
     
 # **Web API Request Example**
