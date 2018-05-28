@@ -93,7 +93,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
                 .Returns(
                     new SchemaValidationResult()
                     {
-                        SuccessfullyParsedObjectsCount = 1,
+                        ParsedObjectsCount = 1,
                         SchemaValidationErrors = new List<SchemaValidationError>()
                     }
                 );
@@ -117,7 +117,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
                 .Returns(
                     new SchemaValidationResult()
                     {
-                        SuccessfullyParsedObjectsCount = 0,
+                        ParsedObjectsCount = 0,
                         SchemaValidationErrors = new List<SchemaValidationError>()
                         {
                             new SchemaValidationError()
@@ -151,7 +151,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
                 .Returns(
                     new SchemaValidationResult()
                     {
-                        SuccessfullyParsedObjectsCount = 1,
+                        ParsedObjectsCount = 1,
                         SchemaValidationErrors = new List<SchemaValidationError>()
                     }
                 );
@@ -176,7 +176,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Controllers
                 .Returns(
                     new SchemaValidationResult()
                     {
-                        SuccessfullyParsedObjectsCount = 1,
+                        ParsedObjectsCount = 1,
                         SchemaValidationErrors = new List<SchemaValidationError>()
                     }
                 );

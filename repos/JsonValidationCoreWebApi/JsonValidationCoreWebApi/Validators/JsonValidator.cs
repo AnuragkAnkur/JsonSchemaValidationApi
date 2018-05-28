@@ -45,6 +45,8 @@ namespace JsonValidationCoreWebApi.Validators
             var schema = JSchema.Parse(jsonSchema.Trim());
 
             var jsonData = JToken.Parse(data.Trim());
+            var parsedObjectsCount = jsonData.Children().Count();
+            _logger.Information($"Number Of object parsed = {parsedObjectsCount} for schema \n {jsonSchema}");
 
             IList<ValidationError> validationErrors = new List<ValidationError>();
 
@@ -52,23 +54,24 @@ namespace JsonValidationCoreWebApi.Validators
 
             var listOfErrors = FilterNullValueError(validationErrors);
 
-            var schemaValidationResult = new SchemaValidationResult()
+            var errorGroup = listOfErrors.GroupBy(x => x.ErrorType);
+            foreach (var grouping in errorGroup)
             {
-                SchemaValidationErrors = listOfErrors
-            };
-
-            if (!listOfErrors.Any())
-            {
-                var successfullyParsedObjectsCount = jsonData.Children().Count();
-                _logger.Information($"Number Of object parsed = {successfullyParsedObjectsCount} for schema \n {jsonSchema}");
-                schemaValidationResult.SuccessfullyParsedObjectsCount = successfullyParsedObjectsCount;
+                _logger.Error($"ErrorType = {grouping.Key}. Count = {grouping.Count()}");
             }
+
+            var schemaValidationResult = new SchemaValidationResult
+            {
+                SchemaValidationErrors = listOfErrors,
+                ParsedObjectsCount = parsedObjectsCount
+            };
 
             return schemaValidationResult;
         }
 
         private List<SchemaValidationError> FilterNullValueError(IList<ValidationError> validationErrors)
         {
+            var nullOccuranceCount = 0;
             var listOfErrors = new List<SchemaValidationError>();
             foreach (var error in validationErrors)
             {
@@ -76,6 +79,7 @@ namespace JsonValidationCoreWebApi.Validators
                 {
                     if (error.Value == null)
                     {
+                        nullOccuranceCount++;
                         _logger.Warning($"Encountered 'Null' value at line number {error.LineNumber} " +
                                         $"and position {error.LinePosition} for Property {error.Path}." +
                                         $"\nError Message: {error.Message}");
@@ -93,6 +97,8 @@ namespace JsonValidationCoreWebApi.Validators
                     LinePosition = error.LinePosition
                 });
             }
+
+            _logger.Information($"Number of 'Null' occurances is: {nullOccuranceCount}");
 
             return listOfErrors;
         }

@@ -11,7 +11,9 @@ namespace JsonValidationCoreWebApi
         {
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.RollingFile("c:\\JsonValidationCoreWebApi-log-{Date}.txt", outputTemplate: MessageTemplate)
+                .WriteTo.RollingFile("c:\\JsonValidationCoreWebApi-log-{Date}.txt"
+                    , outputTemplate: MessageTemplate
+                    , fileSizeLimitBytes:null)
                 .WriteTo.Console(outputTemplate: MessageTemplate)
                 .CreateLogger();
 

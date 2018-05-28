@@ -86,7 +86,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(2, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal("name", schemaValidationResult.SchemaValidationErrors.First().Path);
             Assert.Equal(ErrorType.Type, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
@@ -108,7 +108,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(0, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Contains("Required properties are missing from object: name.",
                 schemaValidationResult.SchemaValidationErrors.First().Message);
@@ -128,7 +128,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(4, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
             Assert.False(schemaValidationResult.SchemaValidationErrors.Any());
         }
 
@@ -152,7 +152,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(3, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.AdditionalProperties, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -170,7 +170,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(0, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.MinimumItems, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -188,7 +188,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(3, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.MaximumItems, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -205,7 +205,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(4, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
             Assert.False(schemaValidationResult.SchemaValidationErrors.Any());
         }
 
@@ -240,7 +240,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(2, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.MaximumProperties, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -257,7 +257,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(3, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.Maximum, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -274,7 +274,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(3, schemaValidationResult.SchemaValidationErrors.Count);
             var result = schemaValidationResult.SchemaValidationErrors.All(x => x.ErrorType == ErrorType.Minimum);
             Assert.True(result);
@@ -292,7 +292,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(6, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(3, schemaValidationResult.SchemaValidationErrors.Count);
             var result = schemaValidationResult.SchemaValidationErrors.All(x => x.ErrorType == ErrorType.MultipleOf);
             Assert.True(result);
@@ -311,7 +311,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(6, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             var result = schemaValidationResult.SchemaValidationErrors.All(x => x.ErrorType == ErrorType.UniqueItems);
             Assert.True(result);
@@ -329,7 +329,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(2, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.MaximumLength, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -346,7 +346,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             Assert.Equal(ErrorType.MinimumLength, schemaValidationResult.SchemaValidationErrors.First().ErrorType);
         }
@@ -370,7 +370,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
 
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
-            Assert.Equal(0, schemaValidationResult.SuccessfullyParsedObjectsCount);
+            Assert.Equal(2, schemaValidationResult.ParsedObjectsCount);
             Assert.Equal(1, schemaValidationResult.SchemaValidationErrors.Count);
             var result = schemaValidationResult.SchemaValidationErrors.All(x => x.ErrorType == ErrorType.Enum);
             Assert.True(result);

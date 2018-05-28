@@ -6,6 +6,6 @@ namespace JsonValidationCoreWebApi.Contracts.Models
     {
         public List<SchemaValidationError> SchemaValidationErrors { get; set; }
 
-        public int SuccessfullyParsedObjectsCount { get; set; }
+        public int ParsedObjectsCount { get; set; }
     }
 }
