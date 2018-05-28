@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.ApplicationInsights.DependencyCollector</id>
+    <version>2.4.1</version>
+    <title>Application Insights Dependency Collector</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>http://go.microsoft.com/fwlink/?LinkID=510709</licenseUrl>
+    <projectUrl>http://go.microsoft.com/fwlink/?LinkId=392727</projectUrl>
+    <iconUrl>http://appanacdn.blob.core.windows.net/cdn/icons/aic.png</iconUrl>
+    <description>Application Insights Dependency Collector for .NET applications. This is a dependent package for Application Insights platform specifc packages and provides automatic collection of dependency telemetry. Please install the platform specific packages directly for the best experience. Privacy statement: https://go.microsoft.com/fwlink/?LinkId=512156</description>
+    <summary>Application Insights Dependency Collector for .NET applications provides platform specific automatic collection of dependency telemetry.</summary>
+    <releaseNotes>For the release notes please follow http://go.microsoft.com/fwlink/?LinkId=535037</releaseNotes>
+    <copyright>Copyright © Microsoft. All Rights Reserved.</copyright>
+    <tags>Analytics ApplicationInsights Telemetry AppInsights</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="Microsoft.ApplicationInsights" version="[2.4.0]" />
+        <dependency id="Microsoft.ApplicationInsights.Agent.Intercept" version="2.4.0" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Microsoft.ApplicationInsights" version="[2.4.0]" />
+        <dependency id="Microsoft.ApplicationInsights.Agent.Intercept" version="2.4.0" />
+        <dependency id="System.Diagnostics.DiagnosticSource" version="4.4.0" />
+      </group>
+      <group targetFramework=".NETStandard1.6">
+        <dependency id="Microsoft.ApplicationInsights" version="[2.4.0]" />
+        <dependency id="Microsoft.Extensions.PlatformAbstractions" version="1.1.0" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="System.Diagnostics.StackTrace" version="4.3.0" />
+        <dependency id="System.Diagnostics.DiagnosticSource" version="4.4.0" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

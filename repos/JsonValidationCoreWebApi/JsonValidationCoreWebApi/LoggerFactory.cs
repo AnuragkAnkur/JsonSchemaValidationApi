@@ -9,11 +9,13 @@ namespace JsonValidationCoreWebApi
 
         public static ILogger CreateLogger()
         {
-            return new LoggerConfiguration()
+            var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.RollingFile(".\\bin\\debug\\Logs\\JsonValidationCoreWebApi-log-{Date}.txt", outputTemplate: MessageTemplate)
+                .WriteTo.RollingFile("c:\\JsonValidationCoreWebApi-log-{Date}.txt", outputTemplate: MessageTemplate)
                 .WriteTo.Console(outputTemplate: MessageTemplate)
                 .CreateLogger();
+
+            return logger;
         }
     }
 }

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.AspNetCore</id>
+    <version>2.0.2</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://raw.githubusercontent.com/aspnet/Home/2.0.0/LICENSE.txt</licenseUrl>
+    <projectUrl>https://asp.net/</projectUrl>
+    <iconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</iconUrl>
+    <description>Microsoft.AspNetCore</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>aspnetcore</tags>
+    <serviceable>true</serviceable>
+    <repository type="git" url="https://github.com/aspnet/MetaPackages" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.AspNetCore.Diagnostics" version="2.0.2" />
+        <dependency id="Microsoft.AspNetCore.Hosting" version="2.0.2" />
+        <dependency id="Microsoft.AspNetCore.Routing" version="2.0.2" />
+        <dependency id="Microsoft.AspNetCore.Server.IISIntegration" version="2.0.2" />
+        <dependency id="Microsoft.AspNetCore.Server.Kestrel" version="2.0.2" />
+        <dependency id="Microsoft.AspNetCore.Server.Kestrel.Https" version="2.0.2" />
+        <dependency id="Microsoft.Extensions.Configuration.CommandLine" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Configuration.EnvironmentVariables" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Configuration.FileExtensions" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Configuration.Json" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Configuration.UserSecrets" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Logging" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Logging.Configuration" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Logging.Console" version="2.0.1" />
+        <dependency id="Microsoft.Extensions.Logging.Debug" version="2.0.1" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="3.3">
+    <id>Microsoft.CodeAnalysis.CSharp.Workspaces</id>
+    <version>2.3.1</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=529443</licenseUrl>
+    <projectUrl>http://msdn.com/roslyn</projectUrl>
+    <description>This package was built from the source at https://github.com/dotnet/roslyn/commit/57c813192bd494bb15aaa841f415f28f50438e19</description>
+    <summary>.NET Compiler Platform ("Roslyn") support for analyzing C# projects and solutions.</summary>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+    <tags>Roslyn CodeAnalysis Compiler CSharp VB VisualBasic Parser Scanner Lexer Emit CodeGeneration Metadata IL Compilation Scripting Syntax Semantics</tags>
+    <serviceable>true</serviceable>
+    <dependencies>
+      <dependency id="Microsoft.CodeAnalysis.CSharp" version="[2.3.1]" />
+      <dependency id="Microsoft.CodeAnalysis.Workspaces.Common" version="[2.3.1]" />
+    </dependencies>
+  </metadata>
+</package>

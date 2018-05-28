@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.AzureAppServices.HostingStartup</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.AzureAppServices.HostingStartup.AzureAppServicesHostingStartup">
+            <summary>
+            A dynamic azure lightup experiance
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.AzureAppServices.HostingStartup.AzureAppServicesHostingStartup.Configure(Microsoft.AspNetCore.Hosting.IWebHostBuilder)">
+            <summary>
+            Calls UseAzureAppServices
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>

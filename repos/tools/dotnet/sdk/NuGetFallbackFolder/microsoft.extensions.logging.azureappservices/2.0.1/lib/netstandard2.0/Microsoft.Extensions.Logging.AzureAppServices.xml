@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Logging.AzureAppServices</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings">
+            <summary>
+            Settings for Azure diagnostics logging.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.FileSizeLimit">
+            <summary>
+            Gets or sets a strictly positive value representing the maximum log size in bytes.
+            Once the log is full, no more messages will be appended.
+            Defaults to <c>10MB</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.RetainedFileCountLimit">
+            <summary>
+            Gets or sets a strictly positive value representing the maximum retained file count.
+            Defaults to <c>2</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.OutputTemplate">
+            <summary>
+            Gets or sets a message template describing the output messages.
+            Defaults to <c>"{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}"</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.BlobBatchSize">
+            <summary>
+            Gets or sets a maximum number of events to include in a single blob append batch.
+            Defaults to <c>32</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.BlobCommitPeriod">
+            <summary>
+            Gets or sets a time to wait between checking for blob log batches.
+            Defaults to 5 seconds.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.BlobName">
+            <summary>
+            Gets or sets the last section of log blob name.
+            Defaults to <c>"applicationLog.txt"</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.BackgroundQueueSize">
+            <summary>
+            Gets or sets the maximum size of the background log message queue or 0 for no limit.
+            After maximum queue size is reached log event sink would start blocking.
+            Defaults to <c>0</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings.FileFlushPeriod">
+            <summary>
+            Gets or sets the period after which logs will be flushed to disk or
+            <c>null</c> if auto flushing is not required.
+            Defaults to 1 second.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.AzureBlobLoggerOptions">
+            <summary>
+            Options for Azure diagnostics blob logging.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureBlobLoggerOptions.BlobName">
+            <summary>
+            Gets or sets the last section of log blob name.
+            Defaults to <c>"applicationLog.txt"</c>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.AzureFileLoggerOptions">
+            <summary>
+            Options for Azure diagnostics file logging.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureFileLoggerOptions.FileSizeLimit">
+            <summary>
+            Gets or sets a strictly positive value representing the maximum log size in bytes or null for no limit.
+            Once the log is full, no more messages will be appended.
+            Defaults to <c>10MB</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureFileLoggerOptions.RetainedFileCountLimit">
+            <summary>
+            Gets or sets a strictly positive value representing the maximum retained file count or null for no limit.
+            Defaults to <c>2</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.AzureFileLoggerOptions.FileName">
+            <summary>
+            Gets or sets a strictly positive value representing the maximum retained file count or null for no limit.
+            Defaults to <c>2</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.BatchingLoggerOptions.FlushPeriod">
+            <summary>
+            Gets or sets the period after which logs will be flushed to the store.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.BatchingLoggerOptions.BackgroundQueueSize">
+            <summary>
+            Gets or sets the maximum size of the background log message queue or null for no limit.
+            After maximum queue size is reached log event sink would start blocking.
+            Defaults to <c>null</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.BatchingLoggerOptions.BatchSize">
+            <summary>
+            Gets or sets a maximum number of events to include in a single batch or null for no limit.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.BatchingLoggerOptions.IsEnabled">
+            <summary>
+            Gets or sets value indicating if logger accepts and queues writes.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobAppendReferenceWrapper">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobAppendReferenceWrapper.AppendAsync(System.ArraySegment{System.Byte},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobLoggerProvider">
+            <summary>
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerProvider"/> implementation that stores messages by appending them to Azure Blob in batches.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.Extensions.Logging.AzureAppServices.AzureBlobLoggerOptions})">
+            <summary>
+            Creates a new instance of <see cref="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobLoggerProvider"/>
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.Extensions.Logging.AzureAppServices.AzureBlobLoggerOptions},System.Func{System.String,Microsoft.Extensions.Logging.AzureAppServices.Internal.ICloudAppendBlob})">
+            <summary>
+            Creates a new instance of <see cref="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.BlobLoggerProvider"/>
+            </summary>
+            <param name="blobReferenceFactory">The container to store logs to.</param>
+            <param name="options"></param>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.ICloudAppendBlob">
+            <summary>
+            Represents an append blob, a type of blob where blocks of data are always committed to the end of the blob.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServices.Internal.ICloudAppendBlob.AppendAsync(System.ArraySegment{System.Byte},System.Threading.CancellationToken)">
+            <summary>
+            Initiates an asynchronous operation to open a stream for writing to the blob.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> object of type <see cref="T:System.IO.Stream" /> that represents the asynchronous operation.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.IWebAppContext">
+            <summary>
+            Represents an Azure WebApp context
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.IWebAppContext.HomeFolder">
+            <summary>
+            Gets the path to the home folder if running in Azure WebApp
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.IWebAppContext.SiteName">
+            <summary>
+            Gets the name of site if running in Azure WebApp
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.IWebAppContext.SiteInstanceId">
+            <summary>
+            Gets the id of site if running in Azure WebApp
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.IWebAppContext.IsRunningInAzureWebApp">
+            <summary>
+            Gets a value indicating whether or new we're in an Azure WebApp
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.WebAppContext">
+            <summary>
+            Represents the default implementation of <see cref="T:Microsoft.Extensions.Logging.AzureAppServices.Internal.IWebAppContext"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.WebAppContext.Default">
+            <summary>
+            Gets the default instance of the WebApp context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.WebAppContext.HomeFolder">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.WebAppContext.SiteName">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.WebAppContext.SiteInstanceId">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.AzureAppServices.Internal.WebAppContext.IsRunningInAzureWebApp">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.AzureAppServicesLoggerFactoryExtensions">
+            <summary>
+            Extension methods for adding Azure diagnostics logger.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServicesLoggerFactoryExtensions.AddAzureWebAppDiagnostics(Microsoft.Extensions.Logging.ILoggingBuilder)">
+            <summary>
+            Adds an Azure Web Apps diagnostics logger.
+            </summary>
+            <param name="builder">The extension method argument</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServicesLoggerFactoryExtensions.AddAzureWebAppDiagnostics(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Adds an Azure Web Apps diagnostics logger.
+            </summary>
+            <param name="factory">The extension method argument</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.AzureAppServicesLoggerFactoryExtensions.AddAzureWebAppDiagnostics(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Logging.AzureAppServices.AzureAppServicesDiagnosticsSettings)">
+            <summary>
+            Adds an Azure Web Apps diagnostics logger.
+            </summary>
+            <param name="factory">The extension method argument</param>
+            <param name="settings">The setting object to configure loggers.</param>
+        </member>
+    </members>
+</doc>

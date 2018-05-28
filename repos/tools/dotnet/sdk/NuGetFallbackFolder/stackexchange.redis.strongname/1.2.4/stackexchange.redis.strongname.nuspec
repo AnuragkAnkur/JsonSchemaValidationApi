@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>StackExchange.Redis.StrongName</id>
+    <version>1.2.4</version>
+    <authors>Stack Exchange, Inc.,marc.gravell</authors>
+    <owners>Stack Exchange, Inc.,marc.gravell</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.github.com/StackExchange/StackExchange.Redis/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/StackExchange/StackExchange.Redis/</projectUrl>
+    <description>High performance Redis client, incorporating both synchronous and asynchronous usage.</description>
+    <releaseNotes>https://stackexchange.github.io/StackExchange.Redis/ReleaseNotes</releaseNotes>
+    <copyright>2017 Stack Exchange, Inc.</copyright>
+    <tags>Async Redis Cache PubSub Messaging</tags>
+    <repository type="git" url="https://github.com/StackExchange/StackExchange.Redis/" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETFramework4.6" />
+      <group targetFramework=".NETStandard1.5">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+        <dependency id="System.Collections" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Collections.Concurrent" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Collections.NonGeneric" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Diagnostics.Tools" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.IO.Compression" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.IO.FileSystem" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Linq" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Net.NameResolution" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Net.Security" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Net.Sockets" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Reflection.Emit" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Reflection.Emit.Lightweight" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Reflection.TypeExtensions" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.Extensions" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.Cryptography.Algorithms" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.Cryptography.X509Certificates" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Text.RegularExpressions" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Threading" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Threading.Thread" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Threading.ThreadPool" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Threading.Timer" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework=".NETFramework4.5, .NETFramework4.6" />
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.5, .NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.IO.Compression" targetFramework=".NETFramework4.5, .NETFramework4.6" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

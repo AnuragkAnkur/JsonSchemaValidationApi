@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.Authentication.Google</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.Builder.GoogleAppBuilderExtensions">
+            <summary>
+            Extension methods to add Google authentication capabilities to an HTTP application pipeline.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.GoogleAppBuilderExtensions.UseGoogleAuthentication(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Obsolete, see https://go.microsoft.com/fwlink/?linkid=845470
+            </summary>
+            <param name="app">The <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> to add the handler to.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.GoogleAppBuilderExtensions.UseGoogleAuthentication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Authentication.Google.GoogleOptions)">
+            <summary>
+            Obsolete, see https://go.microsoft.com/fwlink/?linkid=845470
+            </summary>
+            <param name="app">The <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> to add the handler to.</param>
+            <param name="options">A <see cref="T:Microsoft.AspNetCore.Authentication.Google.GoogleOptions"/> that specifies options for the handler.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Google.GoogleDefaults">
+            <summary>
+            Default values for Google authentication
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Google.GoogleHelper">
+            <summary>
+            Contains static methods that allow to extract user's information from a <see cref="T:Newtonsoft.Json.Linq.JObject"/>
+            instance retrieved from Google after a successful authentication process.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Google.GoogleHelper.GetEmail(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Gets the user's email.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Authentication.Google.GoogleOptions">
+            <summary>
+            Configuration options for <see cref="T:Microsoft.AspNetCore.Authentication.Google.GoogleHandler"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Google.GoogleOptions.#ctor">
+            <summary>
+            Initializes a new <see cref="T:Microsoft.AspNetCore.Authentication.Google.GoogleOptions"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Google.GoogleOptions.AccessType">
+            <summary>
+            access_type. Set to 'offline' to request a refresh token.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Google.Resources.Exception_OptionMustBeProvided">
+            <summary>
+            The '{0}' option must be provided.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Google.Resources.FormatException_OptionMustBeProvided(System.Object)">
+            <summary>
+            The '{0}' option must be provided.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Authentication.Google.Resources.Exception_ValidatorHandlerMismatch">
+            <summary>
+            An ICertificateValidator cannot be specified at the same time as an HttpMessageHandler unless it is a WebRequestHandler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Authentication.Google.Resources.FormatException_ValidatorHandlerMismatch">
+            <summary>
+            An ICertificateValidator cannot be specified at the same time as an HttpMessageHandler unless it is a WebRequestHandler.
+            </summary>
+        </member>
+    </members>
+</doc>

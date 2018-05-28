@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.ApplicationInsights.AspNetCore</id>
+    <version>2.1.1</version>
+    <title>Application Insights for ASP.NET Core Web Applications</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://go.microsoft.com/fwlink/?LinkID=510709</licenseUrl>
+    <projectUrl>https://go.microsoft.com/fwlink/?LinkId=392727</projectUrl>
+    <iconUrl>https://appanacdn.blob.core.windows.net/cdn/icons/aic.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Application Insights for ASP.NET Core web applications. See https://azure.microsoft.com/en-us/documentation/articles/app-insights-asp-net-five/ for more information. Privacy statement: https://go.microsoft.com/fwlink/?LinkId=512156</description>
+    <summary>Application Insights for ASP.NET Core web applications.</summary>
+    <copyright>Copyright © Microsoft. All Rights Reserved.</copyright>
+    <tags>Analytics,ApplicationInsights,Telemetry,AppInsights,aspnetcore</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5.1">
+        <dependency id="System.Net.Http" version="[4.3.1, )" />
+        <dependency id="Microsoft.ApplicationInsights.PerfCounterCollector" version="[2.4.1, )" />
+        <dependency id="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" version="[2.4.0, )" />
+        <dependency id="Microsoft.AspNetCore.Hosting" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.Configuration" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.Configuration.Json" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.DiagnosticAdapter" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="[1.0.0, )" />
+        <dependency id="System.Text.Encodings.Web" version="[4.3.1, )" />
+        <dependency id="Microsoft.ApplicationInsights" version="[2.4.0, )" />
+        <dependency id="Microsoft.ApplicationInsights.DependencyCollector" version="[2.4.1, )" />
+      </group>
+      <group targetFramework=".NETStandard1.6">
+        <dependency id="NETStandard.Library" version="[1.6.1, )" />
+        <dependency id="System.Net.NameResolution" version="[4.3.0, )" />
+        <dependency id="Microsoft.AspNetCore.Hosting" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.Configuration" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.Configuration.Json" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.DiagnosticAdapter" version="[1.0.0, )" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="[1.0.0, )" />
+        <dependency id="System.Text.Encodings.Web" version="[4.3.1, )" />
+        <dependency id="Microsoft.ApplicationInsights" version="[2.4.0, )" />
+        <dependency id="Microsoft.ApplicationInsights.DependencyCollector" version="[2.4.1, )" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

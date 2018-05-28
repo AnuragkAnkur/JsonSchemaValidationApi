@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.ApplicationInsights.HostingStartup</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.ApplicationInsightsHostingStartup">
+            <summary>
+            A dynamic Application Insights lightup experience
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.ApplicationInsightsHostingStartup.Configure(Microsoft.AspNetCore.Hosting.IWebHostBuilder)">
+            <summary>
+            Calls UseApplicationInsights
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.ApplicationInsightsHostingStartup.InitializeServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the Javascript <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent"/> to the <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> associated with the application.</param>
+        </member>
+        <member name="T:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.JavaScriptSnippetTagHelperComponent">
+            <summary>
+            The <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent"/> that injects the <see cref="T:Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet"/> at the end of the head tag.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.JavaScriptSnippetTagHelperComponent.#ctor(Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet)">
+            <summary>
+            Initializes the <see cref="T:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.JavaScriptSnippetTagHelperComponent"/>.
+            </summary>
+            <param name="javaScriptSnippet">The <see cref="T:Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet"/> to inject in the head tag.</param>
+        </member>
+        <member name="P:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.JavaScriptSnippetTagHelperComponent.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNetCore.ApplicationInsights.HostingStartup.JavaScriptSnippetTagHelperComponent.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <summary>
+            Appends the <see cref="T:Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet"/> to the head tag.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext"/> associated with the head tag.</param>
+            <param name="output">The <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput"/> of the head tag.</param>
+        </member>
+    </members>
+</doc>

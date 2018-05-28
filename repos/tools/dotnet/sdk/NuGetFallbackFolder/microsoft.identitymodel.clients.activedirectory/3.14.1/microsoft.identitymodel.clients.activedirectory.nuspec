@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.8.6">
+    <id>Microsoft.IdentityModel.Clients.ActiveDirectory</id>
+    <version>3.14.1</version>
+    <title>Active Directory Authentication Library</title>
+    <authors>Microsoft Corporation</authors>
+    <owners>Microsoft Open Technologies</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://go.microsoft.com/fwlink/?linkid=841311</licenseUrl>
+    <projectUrl>http://go.microsoft.com/fwlink/?LinkId=258232</projectUrl>
+    <description>This package contains the binaries of the Active Directory Authentication Library (ADAL). ADAL provides a .NET Standard class library with easy to use authentication functionality for your .NET client on various platforms including Windows desktop, Windows Store, Xamarin iOS and Xamarin Android by taking advantage of Windows Server Active Directory and Azure Active Directory.</description>
+    <summary>This package contains the binaries of the Active Directory Authentication Library (ADAL). ADAL provides easy to use authentication functionality for your .NET based client by taking advantage of Windows Server Active Directory and Azure Active Directory.</summary>
+    <copyright>(C) Microsoft Open Technologies. All rights reserved.</copyright>
+    <language>en-US</language>
+    <tags>Active Directory Authentication Library, ADAL, Directory, Azure AD, AAD, Identity, Authentication, .NET, Windows Store, Xamarin iOS, Android</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard1.4">
+        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="System.Runtime.Serialization.Json" version="4.0.2" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.1.1" />
+      </group>
+      <group targetFramework=".NETCore4.5" />
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETPortable0.0-Profile7" />
+      <group targetFramework="MonoAndroid1.0" />
+      <group targetFramework="Xamarin.iOS1.0" />
+    </dependencies>
+  </metadata>
+</package>

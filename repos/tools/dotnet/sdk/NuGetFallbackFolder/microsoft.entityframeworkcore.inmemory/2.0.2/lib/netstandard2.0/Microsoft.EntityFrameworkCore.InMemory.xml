@@ -1,0 +1,795 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.EntityFrameworkCore.InMemory</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId">
+            <summary>
+                <para>
+                    Event IDs for in-memory events that correspond to messages logged to an <see cref="T:Microsoft.Extensions.Logging.ILogger" />
+                    and events sent to a <see cref="T:System.Diagnostics.DiagnosticSource" />.
+                </para>
+                <para>
+                    These IDs are also used with <see cref="T:Microsoft.EntityFrameworkCore.Diagnostics.WarningsConfigurationBuilder" /> to configure the
+                    behavior of warnings.
+                </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning">
+            <summary>
+                <para>
+                    Changes were saved to the database.
+                </para>
+                <para>
+                    This event is in the <see cref="T:Microsoft.EntityFrameworkCore.DbLoggerCategory.Database.Transaction" /> category.
+                </para>
+                <para>
+                    This event uses the <see cref="T:Microsoft.EntityFrameworkCore.Diagnostics.EventData" /> payload when used with a <see cref="T:System.Diagnostics.DiagnosticSource" />.
+                </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.ChangesSaved">
+            <summary>
+                <para>
+                    A transaction operation was requested, but ignored because in-memory does not support transactions.
+                </para>
+                <para>
+                    This event is in the <see cref="T:Microsoft.EntityFrameworkCore.DbLoggerCategory.Update" /> category.
+                </para>
+                <para>
+                    This event uses the <see cref="T:Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesEventData" /> payload when used with a <see cref="T:System.Diagnostics.DiagnosticSource" />.
+                </para>
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.InMemoryDatabaseFacadeExtensions">
+            <summary>
+                In-memory specific extension methods for <see cref="P:Microsoft.EntityFrameworkCore.DbContext.Database" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.InMemoryDatabaseFacadeExtensions.IsInMemory(Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade)">
+            <summary>
+                <para>
+                    Returns true if the database provider currently in use is the in-memory provider.
+                </para>
+                <para>
+                    This method can only be used after the <see cref="T:Microsoft.EntityFrameworkCore.DbContext" /> has been configured because
+                    it is only then that the provider is known. This means that this method cannot be used
+                    in <see cref="M:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)" /> because this is where application code sets the
+                    provider to use as part of configuring the context.
+                </para>
+            </summary>
+            <param name="database"> The facade from <see cref="P:Microsoft.EntityFrameworkCore.DbContext.Database" />. </param>
+            <returns> True if the in-memory database is being used; false otherwise. </returns>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions">
+            <summary>
+                In-memory specific extension methods for <see cref="T:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase``1(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder{``0},System.String,System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})">
+            <summary>
+                Configures the context to connect to an in-memory database.
+                The in-memory database is shared anywhere the same name is used.
+            </summary>
+            <typeparam name="TContext"> The type of context being configured. </typeparam>
+            <param name="optionsBuilder"> The builder being used to configure the context. </param>
+            <param name="databaseName">
+                The name of the in-memory database. This allows the scope of the in-memory database to be controlled
+                independently of the context. The in-memory database is shared anywhere the same name is used.
+            </param>
+            <param name="inMemoryOptionsAction">An optional action to allow additional in-memory specific configuration.</param>
+            <returns> The options builder so that further configuration can be chained. </returns>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder,System.String,System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})">
+            <summary>
+                Configures the context to connect to a named in-memory database.
+                The in-memory database is shared anywhere the same name is used.
+            </summary>
+            <param name="optionsBuilder"> The builder being used to configure the context. </param>
+            <param name="databaseName">
+                The name of the in-memory database. This allows the scope of the in-memory database to be controlled
+                independently of the context. The in-memory database is shared anywhere the same name is used.
+            </param>
+            <param name="inMemoryOptionsAction">An optional action to allow additional in-memory specific configuration.</param>
+            <returns> The options builder so that further configuration can be chained. </returns>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase``1(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder{``0},System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})">
+            <summary>
+                Configures the context to connect to the legacy shared in-memory database.
+                This method is obsolete. Use <see cref="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase``1(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder{``0},System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})" /> instead.
+                The database will be shared anywhere the same name is used.
+            </summary>
+            <typeparam name="TContext"> The type of context being configured. </typeparam>
+            <param name="optionsBuilder"> The builder being used to configure the context. </param>
+            <param name="inMemoryOptionsAction">An optional action to allow additional in-memory specific configuration.</param>
+            <returns> The options builder so that further configuration can be chained. </returns>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder,System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})">
+            <summary>
+                Configures the context to connect to the legacy shared in-memory database.
+                This method is obsolete. Use <see cref="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder,System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})" /> instead.
+                The database will be shared anywhere the same name is used.
+            </summary>
+            <param name="optionsBuilder"> The builder being used to configure the context. </param>
+            <param name="inMemoryOptionsAction">An optional action to allow additional in-memory specific configuration.</param>
+            <returns> The options builder so that further configuration can be chained. </returns>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Internal.InMemoryLoggerExtensions">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Internal.InMemoryLoggerExtensions.TransactionIgnoredWarning(Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger{Microsoft.EntityFrameworkCore.DbLoggerCategory.Database.Transaction})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Internal.InMemoryLoggerExtensions.ChangesSaved(Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger{Microsoft.EntityFrameworkCore.DbLoggerCategory.Update},System.Collections.Generic.IEnumerable{Microsoft.EntityFrameworkCore.Update.IUpdateEntry},System.Int32)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Internal.InMemoryStrings">
+            <summary>
+            	This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Internal.InMemoryStrings.LogSavedChanges">
+            <summary>
+                Saved {count} entities to in-memory store.
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Internal.InMemoryStrings.LogTransactionsNotSupported">
+            <summary>
+                Transactions are not supported by the in-memory store. See http://go.microsoft.com/fwlink/?LinkId=800142
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Internal.InMemoryStrings.UpdateConcurrencyException">
+            <summary>
+                Attempted to update or delete an entity that does not exist in the store.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder">
+            <summary>
+                <para>
+                    Allows in-memory specific configuration to be performed on <see cref="T:Microsoft.EntityFrameworkCore.DbContextOptions" />.
+                </para>
+                <para>
+                    Instances of this class are returned from a call to
+                    <see
+                        cref="M:Microsoft.EntityFrameworkCore.InMemoryDbContextOptionsExtensions.UseInMemoryDatabase(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder,System.String,System.Action{Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder})" />
+                    and it is not designed to be directly constructed in your application code.
+                </para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder.#ctor(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+                Initializes a new instance of the <see cref="T:Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder" /> class.
+            </summary>
+            <param name="optionsBuilder"> The options builder. </param>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Infrastructure.InMemoryDbContextOptionsBuilder.OptionsBuilder">
+            <summary>
+                Clones the configuration in this builder.
+            </summary>
+            <returns> The cloned configuration. </returns>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.#ctor">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.#ctor(Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.Clone">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.StoreName">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.WithStoreName(System.String)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.ApplyServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.GetServiceProviderHashCode">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.Validate(Microsoft.EntityFrameworkCore.Infrastructure.IDbContextOptions)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Infrastructure.Internal.InMemoryOptionsExtension.LogFragment">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal.InMemoryEntityQueryableExpressionVisitor">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal.InMemoryEntityQueryableExpressionVisitor.#ctor(Microsoft.EntityFrameworkCore.Metadata.IModel,Microsoft.EntityFrameworkCore.Query.Internal.IMaterializerFactory,Microsoft.EntityFrameworkCore.Query.EntityQueryModelVisitor,Remotion.Linq.Clauses.IQuerySource)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal.InMemoryEntityQueryableExpressionVisitor.VisitEntityQueryable(System.Type)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal.InMemoryEntityQueryableExpressionVisitorFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal.InMemoryEntityQueryableExpressionVisitorFactory.#ctor(Microsoft.EntityFrameworkCore.Metadata.IModel,Microsoft.EntityFrameworkCore.Query.Internal.IMaterializerFactory)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal.InMemoryEntityQueryableExpressionVisitorFactory.Create(Microsoft.EntityFrameworkCore.Query.EntityQueryModelVisitor,Remotion.Linq.Clauses.IQuerySource)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.Internal.IMaterializerFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.IMaterializerFactory.CreateMaterializer(Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryContext">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryContext.#ctor(Microsoft.EntityFrameworkCore.Query.QueryContextDependencies,System.Func{Microsoft.EntityFrameworkCore.Query.Internal.IQueryBuffer},Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStore)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryContext.Store">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryContextFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryContextFactory.#ctor(Microsoft.EntityFrameworkCore.Query.QueryContextDependencies,Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStoreCache,Microsoft.EntityFrameworkCore.Infrastructure.IDbContextOptions)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryContextFactory.Create">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitor">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitor.#ctor(Microsoft.EntityFrameworkCore.Query.EntityQueryModelVisitorDependencies,Microsoft.EntityFrameworkCore.Query.QueryCompilationContext)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitor.EntityQueryMethodInfo">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitor.OfTypeMethodInfo">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="F:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitor.ProjectionQueryMethodInfo">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitorFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitorFactory.#ctor(Microsoft.EntityFrameworkCore.Query.EntityQueryModelVisitorDependencies)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.InMemoryQueryModelVisitorFactory.Create(Microsoft.EntityFrameworkCore.Query.QueryCompilationContext,Microsoft.EntityFrameworkCore.Query.EntityQueryModelVisitor)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Query.Internal.MaterializerFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.MaterializerFactory.#ctor(Microsoft.EntityFrameworkCore.Metadata.Internal.IEntityMaterializerSource)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Query.Internal.MaterializerFactory.CreateMaterializer(Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryDatabase">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryDatabase.Store">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryDatabase.EnsureDatabaseCreated(Microsoft.EntityFrameworkCore.Metadata.IModel)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStore">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStore.EnsureCreated(Microsoft.EntityFrameworkCore.Metadata.IModel)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStore.Clear">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStore.GetTables(Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStore.ExecuteTransaction(System.Collections.Generic.IEnumerable{Microsoft.EntityFrameworkCore.Update.IUpdateEntry},Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger{Microsoft.EntityFrameworkCore.DbLoggerCategory.Update})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStoreCache">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStoreCache.GetStore(System.String)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTable">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTable.SnapshotRows">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTable.Create(Microsoft.EntityFrameworkCore.Update.IUpdateEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTable.Delete(Microsoft.EntityFrameworkCore.Update.IUpdateEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTable.Update(Microsoft.EntityFrameworkCore.Update.IUpdateEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTableFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTableFactory.Create(Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase.#ctor(Microsoft.EntityFrameworkCore.Storage.DatabaseDependencies,Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStoreCache,Microsoft.EntityFrameworkCore.Infrastructure.IDbContextOptions,Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger{Microsoft.EntityFrameworkCore.DbLoggerCategory.Update})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase.Store">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase.SaveChanges(System.Collections.Generic.IReadOnlyList{Microsoft.EntityFrameworkCore.Update.IUpdateEntry})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase.SaveChangesAsync(System.Collections.Generic.IReadOnlyList{Microsoft.EntityFrameworkCore.Update.IUpdateEntry},System.Threading.CancellationToken)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase.EnsureDatabaseCreated(Microsoft.EntityFrameworkCore.Metadata.IModel)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabase.CompileAsyncQuery``1(Remotion.Linq.QueryModel)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabaseCreator">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabaseCreator.#ctor(Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryDatabase,Microsoft.EntityFrameworkCore.Metadata.IModel)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabaseCreator.EnsureDeleted">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabaseCreator.EnsureDeletedAsync(System.Threading.CancellationToken)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabaseCreator.EnsureCreated">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryDatabaseCreator.EnsureCreatedAsync(System.Threading.CancellationToken)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStore">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStore.#ctor(Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTableFactory)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStore.EnsureCreated(Microsoft.EntityFrameworkCore.Metadata.IModel)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStore.Clear">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStore.GetTables(Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStore.ExecuteTransaction(System.Collections.Generic.IEnumerable{Microsoft.EntityFrameworkCore.Update.IUpdateEntry},Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger{Microsoft.EntityFrameworkCore.DbLoggerCategory.Update})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStoreCache">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStoreCache.#ctor(Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryTableFactory)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStoreCache.GetStore(System.String)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStoreCacheExtensions">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryStoreCacheExtensions.GetStore(Microsoft.EntityFrameworkCore.Storage.Internal.IInMemoryStoreCache,Microsoft.EntityFrameworkCore.Infrastructure.IDbContextOptions)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTable`1">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTable`1.#ctor(Microsoft.EntityFrameworkCore.ChangeTracking.Internal.IPrincipalKeyValueFactory{`0})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTable`1.SnapshotRows">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTable`1.Create(Microsoft.EntityFrameworkCore.Update.IUpdateEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTable`1.Delete(Microsoft.EntityFrameworkCore.Update.IUpdateEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTable`1.Update(Microsoft.EntityFrameworkCore.Update.IUpdateEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTableFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTableFactory.Create(Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTableSnapshot">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTableSnapshot.#ctor(Microsoft.EntityFrameworkCore.Metadata.IEntityType,System.Collections.Generic.IReadOnlyList{System.Object[]})">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTableSnapshot.EntityType">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.Storage.Internal.InMemoryTableSnapshot.Rows">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryIntegerValueGenerator`1">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryIntegerValueGenerator`1.Next(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryIntegerValueGenerator`1.GeneratesTemporaryValues">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryIntegerValueGeneratorFactory">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryIntegerValueGeneratorFactory.Create(Microsoft.EntityFrameworkCore.Metadata.IProperty)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryValueGeneratorSelector">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryValueGeneratorSelector.#ctor(Microsoft.EntityFrameworkCore.ValueGeneration.ValueGeneratorSelectorDependencies)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.EntityFrameworkCore.ValueGeneration.Internal.InMemoryValueGeneratorSelector.Create(Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.IEntityType)">
+            <summary>
+                This API supports the Entity Framework Core infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.InMemoryServiceCollectionExtensions">
+            <summary>
+                In-memory specific extension methods for <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.InMemoryServiceCollectionExtensions.AddEntityFrameworkInMemoryDatabase(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                <para>
+                    Adds the services required by the in-memory database provider for Entity Framework
+                    to an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />. You use this method when using dependency injection
+                    in your application, such as with ASP.NET. For more information on setting up dependency
+                    injection, see http://go.microsoft.com/fwlink/?LinkId=526890.
+                </para>
+                <para>
+                    You only need to use this functionality when you want Entity Framework to resolve the services it uses
+                    from an external dependency injection container. If you are not using an external
+                    dependency injection container, Entity Framework will take care of creating the services it requires.
+                </para>
+            </summary>
+            <example>
+                <code>
+                    public void ConfigureServices(IServiceCollection services)
+                    {
+                        services
+                            .AddEntityFrameworkInMemoryDatabase()
+                            .AddDbContext&lt;MyContext&gt;((serviceProvider, options) =>
+                                options.UseInMemoryDatabase("MyDatabase")
+                                       .UseInternalServiceProvider(serviceProvider));
+                    }
+                </code>
+            </example>
+            <param name="serviceCollection"> The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> to add services to. </param>
+            <returns>
+                The same service collection so that multiple calls can be chained.
+            </returns>
+        </member>
+    </members>
+</doc>

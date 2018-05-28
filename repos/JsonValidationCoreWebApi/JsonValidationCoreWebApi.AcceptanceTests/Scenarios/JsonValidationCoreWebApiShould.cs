@@ -14,10 +14,10 @@ namespace JsonValidationCoreWebApi.AcceptanceTests.Scenarios
 
         public JsonValidationCoreWebApiShould()
         {
-            
-            _fixture = new SchemaValidationApiClientFixture("http://localhost:46998/api/schemavalidator");
+            _fixture = new SchemaValidationApiClientFixture("http://localhost:5000/api/schemavalidator");
         }
 
+        [Trait("Category","AcceptanceTest")]
         [Fact]
         public void ValidateJsonFrom1StWebsiteAgainstGivenRequiredTypeSchema()
         {

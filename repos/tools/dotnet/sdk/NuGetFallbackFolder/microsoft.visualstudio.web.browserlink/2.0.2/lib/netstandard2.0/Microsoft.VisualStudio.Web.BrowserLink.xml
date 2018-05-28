@@ -1,0 +1,698 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.VisualStudio.Web.BrowserLink</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.Builder.BrowserLinkExtensions">
+            <summary>
+            Implementation of extension methods for configuring Browser Link
+            in an ASP.NET Core application.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.BrowserLinkExtensions.UseBrowserLink(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            This method is called to enable Browser Link in an application. It
+            registers a factory method that creates BrowserLinkMiddleware for
+            each request.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkMiddleware">
+            <summary>
+            This class is created once, and invoked for each request. It puts a filter on
+            the Response.Body, which will inject Browser Link's script links into the
+            content (if the content is HTML).
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            This method is called to process the response.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkMiddlewareFactory">
+            <summary>
+            An instance of this class is created when Browser Link is registered
+            in an application. It's job is to remember the base path of the
+            application, so it can be passed on to the BrowserLinkMiddleware.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants">
+            <summary>
+            Well-known strings that are shared between the EurekaPackage in Visual Studio
+            and the HttpModule running in ASP.NET.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.ElevatedIndexFileName">
+            <summary>
+            Name of the index file when VS is elevated. This file can be accessed
+            by any user, including the IIS user.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.NonElevatedIndexFileName">
+            <summary>
+            Name of the index file when VS is not elevated. This file can only be
+            accessed by the current user, i.e. not by IIS.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.RequestSignalSuffix">
+            <summary>
+            Suffix appended to the instance file name to get the name of the
+            Request Signal, which is set to indicate that Artery should start.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.ReadySignalSuffix">
+            <summary>
+            Suffix appended to the instance file name to get the name of the 
+            Ready Signal, which blocks ASP.NET until the Artery server is ready.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.RequestIdHeaderName">
+            <summary>
+            Request header sent from the Browser Link runtime to identify which
+            page request the messages correspond to.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.RequestScheme">
+            <summary>
+            Request sent from the Browser Link runtime to identify whether it's
+            a "http" one or a "https" one.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.RequestHostUrl">
+            <summary>
+            The url of the host used for project match.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.Version2Suffix">
+            <summary>
+            Suffix added to the end of the instance file name to identify a
+            Version 2 instance file
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType">
+            <summary>
+            Constants representing the type of mapping data to follow
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType.Unknown">
+            <summary>
+            This value is never sent over the wire. It is used internally for data
+            blocks that are unrecognized by the receiver.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType.BeginContext">
+            <summary>
+            Push a source context onto the stack. Data to follow includes:
+                SourceStartPosition
+                SourceLength
+                SourceFilePath
+                RenderedPosition
+                RenderedOutputIndex
+                IsLiteral
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType.EndContext">
+            <summary>
+            Pop a source context from the stack. Data to follow includes:
+                RenderedOutputIndex
+                RenderedPosition
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType.RenderedOutputDefinition">
+            <summary>
+            Define a rendered output. Data to follow includes:
+                RenderedOutputIndex
+                RenderedContent
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType.RenderedOutputRelationship">
+            <summary>
+            Define a relationship between to rendered outputs. Data to follow includes:
+                ParentRenderedOutputIndex
+                ChildRenderedOutputindex
+                RelativeRenderedPosition
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataType.EndOfData">
+            <summary>
+            Mapping data is complete.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.SourceStartPosition">
+            <summary>
+            (Int32) The first character position of the range of the source file
+            that is currently being rendered.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.SourceLength">
+            <summary>
+            (Int32) The length of the range of the source file that is currently
+            being rendered.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.SourceFilePath">
+            <summary>
+            (string) The path to the source file that is currently being rendered.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.RenderedPosition">
+            <summary>
+            (Int32) The current position in the rendered output that is being written.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.RenderedOutputIndex">
+            <summary>
+            (Int32) The index of the rendered output that is being written.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.RenderedContent">
+            <summary>
+            (string) The final content of a rendered output
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.IsLiteral">
+            <summary>
+            (Boolean) True if a source range is being exactly copied from the source
+            file to the rendered output. This means character-by-character mapping
+            can be done in this source range.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.ParentRenderedOutputIndex">
+            <summary>
+            (Int32) For a rendered output relationship, this is the index of the
+            rendered output that will contain the other output.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.ChildRenderedOutputIndex">
+            <summary>
+            (Int32) For a rendered output relationship, this is the index of the
+            rendered output that is contained by the other output.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.RelativeRenderedPosition">
+            <summary>
+            (Int32) For a rendered output relationship, this is the position where
+            the parent rendered output will contain the child rendered output.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.MappingDataValue.EndOfDataValues">
+            <summary>
+            No more data values in this block.
+            </summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkConstants.FilterPreamble">
+            <summary>
+            Preamble bytes that are returned from BrowserLinkFilterOwinModule to force
+            headers to be returned early.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.ContentTypeUtil">
+            <summary>
+            Helpers for testing the content type of the response content.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.DelayConnectingHttpSocketAdapter">
+            <summary>
+            This class wraps an IHttpSocketAdapter so that it does not connect
+            until the last possible moment, and it does not connect unless absolutely
+            necessary. This way, a connection can be initialized early, but there is
+            no performance hit unless the connection is used.
+            </summary>
+            <remarks>
+            Each method is implemented using one of two strategies:
+            1. If a method is really using the connection (sending or receiving data),
+               make sure the connection has been created and pass the call through.
+            2. If a method is just initializing the connection (e.g. setting headers),
+               pass the call through only if the connection already exists. Otherwise,
+               store the call arguments and replay them after the connection is created.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.FailedConnectionHttpSocketAdapter">
+            <summary>
+            Null-object implementation of a connection, which stands in for a connection
+            that could not be created.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData">
+            <summary>
+            Represents an host connection published from a design tool's host process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.RequestSignalName">
+            <summary>
+            The name of the event to signal when you want the host to start.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.ReadySignalName">
+            <summary>
+            The name of the event to wait on after requesting the host to start.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.ConnectionString">
+            <summary>
+            The string used to identify the host connection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.SslConnectionString">
+            <summary>
+            The string used to identify the SSL host connection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.InjectScriptVerb">
+            <summary>
+            API verb for injecting the Browser Link script into the page
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.MappingDataVerb">
+            <summary>
+            API verb for posting mapping data
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.ServerDataVerb">
+            <summary>
+            API verb for posting data about the server
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData.ProjectPaths">
+            <summary>
+            The physical paths of projects loaded in this instance of the design tool.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionUtil.FindHostConnection(System.String,Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData@)">
+            <summary>
+            Find the host connection for an ASP.NET application.
+            </summary>
+            <param name="applicationPhysicalPath">The physical root path of the application</param>
+            <param name="connection">The connection that is found.</param>
+            <returns>True if a connection is found for the given application.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionUtil.SignalHostForStartup(System.String,System.Boolean)">
+            <summary>
+            Send a signal to the host to make sure the it is running.
+            </summary>
+            <param name="applicationPhysicalPath">The root path of this application</param>
+            <param name="blockUntilStarted">If true, this method will not return until the host signals that it is ready.</param>
+            <returns>True if the handle was successfully signaled, and the host server is ready</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionUtil.SignalHostForStartup(Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData)">
+            <summary>
+            Send a signal to the host to make sure it is running.
+            </summary>
+            <param name="connection">The connection to signal.</param>
+            <returns>True if the handle was successfully signaled, and the host server is ready</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionUtil.SignalHostForStartup(Microsoft.VisualStudio.Web.BrowserLink.HostConnectionData,System.Boolean)">
+            <summary>
+            Send a signal to the host to make sure it is running.
+            </summary>
+            <param name="connection">The connection to signal.</param>
+            <param name="blockUntilStarted">If true, this method will not return until the host signals it is ready</param>
+            <returns>True if the handle was successfully signaled, and the host server is ready</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.HostConnectionUtil.MappedFileExists(System.String)">
+            <summary>
+            Use P/Invoke methods to check for the existance of the mapped file. This
+            is faster than letting MemoryMappedFile.OpenExisting fail, because that
+            method throws an exception.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.HttpAdapterRequestStream">
+            <summary>
+            This class wraps the output stream of an IHttpSocketAdapter into a Stream
+            interface, for use with System.IO.*Writer classes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.HttpAdapterRequestStream.SendDataFromBuffersAsync(Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers{System.Byte},Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter)">
+            <remarks>
+            This function is the pump that pushes data from the buffers into an
+            HTTP connection. It asynchronously waits on data, then asynchronously
+            waits while the data is sent, then waits on more data, etc.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter">
+            <summary>
+            HttpSocketAdapter wraps an ISocketAdapter, and provides functionality
+            for making an HTTP request and handling an HTTP reponse on the socket.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.AddRequestHeader(System.String,System.String)">
+            <summary>
+            Adds a header to the HTTP request. If this method is called after
+            the first call to WriteToRequestAsync, it is ignored.
+            </summary>
+            <param name="name">The name of the header</param>
+            <param name="value">The value of the header</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.WriteToRequestAsync(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Sends some request data. Data is sent using chunked transfer-encoding,
+            so there can be multiple calls to this method.
+            </summary>
+            <param name="buffer">Buffer containing the data.</param>
+            <param name="offset">The position in the buffer where the data starts.</param>
+            <param name="count">The number of bytes of data in the buffer.</param>
+            <returns>A task that completes when the data has been sent.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.CompleteRequest">
+            <summary>
+            Sends data signifying the end of the request. This should only be
+            called once. Any subsequent calls to WriteToRequestAsync will probably
+            be ignored by the server, and may result in exceptions if the socket
+            is closed.
+            </summary>
+            <returns>A task that completes when the data has been sent (not when the response is complete).</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.GetResponseStatusCode">
+            <summary>
+            Gets the HTTP status code returned by the server.
+            </summary>
+            <returns>A task that completes when the status code has been returned by the server. The task returns the status code.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.GetResponseHeader(System.String)">
+            <summary>
+            Gets the value of a header in the HTTP response from the server.
+            </summary>
+            <param name="headerName">The case-insensitive name of the header.</param>
+            <returns>A task that completes when all headers have been returned by the server. The task returns the value of the requested header.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.SetResponseHandler(Microsoft.VisualStudio.Web.BrowserLink.ResponseHandler)">
+            <summary>
+            Sets a callback method that will be called with data contained in the
+            response body returned by the server.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.IHttpSocketAdapter.WaitForResponseComplete">
+            <summary>
+            Wait until the response body has been completely returned by the server.
+            </summary>
+            <returns>A task that completes when the response body has been completely returned by the server.</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.MappingDataWriter">
+            <summary>
+            This feature is provided for page renderers, so they can provide mapping
+            data as the page renders.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.PageExecutionContext">
+            <summary>
+            A PageExecutionContext is created for each source file that is executed as
+            part of the page. It remembers the path to the source file and the TextWriter
+            being used, to pass on during BeginContext and EndContext calls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.PageExecutionContext.BeginContext(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Specifies the part of the source file that is currently being rendered.
+            </summary>
+            <param name="position">The start position of the range in the source file</param>
+            <param name="length">The length of the range in the source file</param>
+            <param name="isLiteral">True if the range is being written verbatim from the source file</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.PageExecutionContext.EndContext">
+            <summary>
+            Specifies that we are done rendering the part of the source file from 
+            BeginContext. Begin/End context calls can be nested within the same file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.PageExecutionListenerFeature">
+            <summary>
+            This feature is provided for page renderers, so they can provide mapping
+            data as the page renders.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.PageExecutionListenerFeature.DecorateWriter(System.IO.TextWriter)">
+            <summary>
+            This method is called to give the listener a chance to replace the TextWriter
+            used to render the page.
+            </summary>
+            <param name="writer">The original TextWriter for the output stream</param>
+            <returns>A TextWriter that will be used for writing the output.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.PageExecutionListenerFeature.GetContext(System.String,System.IO.TextWriter)">
+            <summary>
+            Create a context that associates a TextWriter with a source file.
+            </summary>
+            <param name="sourceFilePath">The path to the source file.</param>
+            <param name="writer">The TextWriter used to render the source file</param>
+            <returns>A context that will be called back with mapping data within the source file.</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.PathUtil">
+            <summary>
+            Helpers for dealing with file paths
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.PathUtil.NormalizeDirectoryPath(System.String)">
+            <summary>
+            Takes a path, and returns an equivalent path in a format that can
+            be used for comparisons.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.PathUtil.CompareNormalizedPaths(System.String,System.String)">
+            <summary>
+            Compares two paths, assuming they were both produced by NormalizeDirectoryPath
+            </summary>
+            <returns>True if the paths are equivalent</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1">
+            <summary>
+            A first-in-first-out data buffering system that reuses existing buffers
+            to minimize the amount of memory required.
+            </summary>
+            <typeparam name="DataType">The type of data being stored</typeparam>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.#ctor(System.Int32)">
+            <summary>
+            Initialize the RevolvingBuffers
+            </summary>
+            <param name="defaultBufferSize">
+            The default size of an individual buffer. Larger buffers may be created
+            to accomodate larger sets of input data.
+            </param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.Dispose">
+            <summary>
+            Clear and free all the buffers. This also alerts asynchronous readers
+            that no more data is coming.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.CopyDataToBuffer(System.ArraySegment{`0})">
+            <summary>
+            Copy data into the buffers.
+            </summary>
+            <param name="arraySegment">Segment of an array to copy</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.CopyDataToBuffer(`0[],System.Int32,System.Int32)">
+            <summary>
+            Copy data into the buffers.
+            </summary>
+            <param name="data">An array containing the data to copy</param>
+            <param name="offset">The starting index of the data to copy</param>
+            <param name="count">The number of data elements to copy</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.GetBufferedData">
+            <summary>
+            Synchronously reads data from the buffer.
+            </summary>
+            <returns>
+            An ArraySegment containing buffered data, or an empty buffer if there is no
+            data to read.
+            </returns>
+            <remarks>
+            The ArraySegment remains valid until GetBufferedData/Async is called again.
+            After the next call to this method, the buffer in the ArraySegment can be
+            reused for future data.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.GetBufferedDataAsync">
+            <summary>
+            Asynchronously reads data from the buffer.
+            </summary>
+            <returns>
+            A task that returns an ArraySegment containing buffered data. If there
+            is no buffered data, the task does not complete until more data is
+            buffered, or the buffers are disposed.
+            </returns>
+            <remarks>
+            The ArraySegment remains valid until GetBufferedData/Async is called again.
+            After the next call to this method, the buffer in the ArraySegment can be
+            reused for future data.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.RevolvingBuffers`1.WaitForBufferEmptyAsync">
+            <summary>
+            Wait until all data has been read from the buffer.
+            </summary>
+            <returns>A task that completes when the last data has been read.</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.IScriptInjectionFilterContext">
+            <summary>
+            IScriptInjectionFilterContext is an abstraction of the request data required
+            by ScriptInjectionFilterStream. It is needed for unit testing, and eventually
+            so ASP.NET and ProjectK can share filter code even though they have different
+            HttpContext classes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.IScriptInjectionFilterContext.RequestPath">
+            <summary>
+            The local (app-relative) path of the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.IScriptInjectionFilterContext.ResponseBody">
+            <summary>
+            The response body, where filtered content will be written.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.IScriptInjectionFilterContext.ResponseContentType">
+            <summary>
+            The Content-Type that is being returned with the response.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.ScriptInjectionFilterStream">
+            <summary>
+            This stream implementation is a passthrough filter. It's job is to add
+            links to the Browser Link connection scripts at the end of HTML content.
+            
+            It does this using a connection to the host, where the actual filtering
+            work is done. If anything goes wrong with the host connection, or
+            if the content being written is not actually HTML, then the filter goes
+            into passthrough mode and returns all content to the output stream unchanged.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.ScriptInjectionFilterStream.IsPassthrough">
+            <summary>
+            Returns true if the filter is in Passthrough mode. All writes will
+            be passed to the output stream unmodified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.ScriptInjectionFilterStream.SentContentToFilter">
+            <summary>
+            Returns true if any data has been sent to the host. At this point,
+            the filter cannot go into passthrough mode to handle a failure, because
+            the data that was sent to the host is lost.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.ScriptInjectionFilterStream.ScriptInjectionTimedOut">
+            <summary>
+            Returns true if the initial request to the host timed out without
+            returning a response code. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.ScriptInjectionFilterStream.WaitForFilterComplete">
+            <summary>
+            Call this method to signal the host that all the content for filtering
+            has been sent, and then wait for the host to return the filtered content.
+            </summary>
+            <returns>A task that completes when the host has returned the filtered contet.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.ScriptInjectionFilterStream.FlushAsync(System.Threading.CancellationToken)">
+            <remarks>
+            In order to flush the content to the output stream, we need to wait
+            for the content that was sent to the host to return. Once that
+            is done, the connection to the host is closed, and the stream
+            goes into passthrough mode. So effectively, any writes that come
+            after a call to flush will not be filtered.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.ISocketAdapter">
+            <summary>
+            SocketAdapter wraps a System.Net.Socket, and provides Task-based async
+            methods for interacting with the Socket. It also provides an abstraction
+            layer for unit tests, so that they don't have to work with real sockets.
+            </summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.SocketReader">
+            <summary>
+            This is a helper class for reading data from a Socket. It encapsulates
+            the ability to alternately read decoded characters and lines, or raw
+            data, from the same data source.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.SocketReader.SetEncoding(System.Text.Encoding)">
+            <summary>
+            Sets the Encoding that will be used for ReadChar and ReadLine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.SocketReader.ReadLine(System.Threading.CancellationToken)">
+            <summary>
+            Read characters from the socket until a CRLF is encountered.
+            </summary>
+            <returns>
+            A task that completes when enough data has been returned by the server.
+            The task returns the text of the line, excluding the CRLF.
+            </returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.SocketReader.ReadChar(System.Threading.CancellationToken)">
+            <summary>
+            Read a single character from the socket.
+            </summary>
+            <returns>A task that completes when enough data has been returned from the server.</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.SocketReader.ReadBytesIntoResponseHandler(System.Int64,Microsoft.VisualStudio.Web.BrowserLink.ResponseHandler,System.Threading.CancellationToken)">
+            <summary>
+            Reads some raw data into a ResponseHandler method.
+            </summary>
+            <returns>
+            A task that completes when enough data has been returned by the server.
+            The task returns the number of bytes sent to the ResponseHandler.
+            </returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.SocketReader.DecoderAdapter">
+            <summary>
+            This helper class maintains state used in decoding characters
+            that may be multi-byte, when all the bytes might not be returned
+            by the server at the same time (or they might fall on the edge of
+            the buffer used to read data from the server).
+            </summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.TaskHelpers.WaitWithTimeout``1(System.Threading.Tasks.Task{``0},System.TimeSpan,``0)">
+            <summary>
+            Add a timeout to a task. If the timeout expires before the underlying
+            task completes, the wrapper task returns a fixed value.
+            </summary>
+            <param name="task">The task being awaited</param>
+            <param name="timeout">The amount of time to wait</param>
+            <param name="resultIfTimedOut">The result returned if the timeout expires</param>
+            <remarks>
+            The <paramref name="task"/> will continue to execute after the 
+            <paramref name="timeout"/> expires, but tasks awaiting the wrapper will
+            be unblocked.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.VisualStudio.Web.BrowserLink.TaskHelpers.WaitWithCancellation``1(System.Threading.Tasks.Task{``0},System.Threading.CancellationToken,``0)">
+            <summary>
+            Wrap a task so that it can be cancelled. If the task is cancelled before
+            the underlying task completes, the wrapper task returns a fixed value.
+            </summary>
+            <param name="task">The task being awaited</param>
+            <param name="cancellationToken">The cancellation token</param>
+            <param name="resultIfCancelled">The result returned if the timeout expires</param>
+            <returns>A task that can be cancelled before it completes</returns>
+            <remarks>
+            The <paramref name="task"/> will continue to execute after the
+            <paramref name="cancellationToken"/> is set, but tasks awaiting the
+            wrapper will be unblocked.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.VisualStudio.Web.BrowserLink.TextWriterDecorator">
+            <summary>
+            A wrapper for a TextWriter that allows us to record mapping information
+            as content is written to the output.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.TextWriterDecorator.OutputPosition">
+            <summary>
+            Returns the current character position where output is being written.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.TextWriterDecorator.RenderedOutputIndex">
+            <summary>
+            An ID used to identify this writer withing the current page request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.Web.BrowserLink.TextWriterDecorator.RenderedOutput">
+            <summary>
+            The complete content that has been written to this writer.
+            </summary>
+        </member>
+    </members>
+</doc>

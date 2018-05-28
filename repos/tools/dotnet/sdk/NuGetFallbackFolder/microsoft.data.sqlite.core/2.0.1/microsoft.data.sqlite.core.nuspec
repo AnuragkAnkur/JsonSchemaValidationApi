@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Data.Sqlite.Core</id>
+    <version>2.0.1</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://raw.githubusercontent.com/aspnet/Home/2.0.0/LICENSE.txt</licenseUrl>
+    <projectUrl>https://asp.net/</projectUrl>
+    <iconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</iconUrl>
+    <description>SQLite implementation of the System.Data.Common provider model.
+
+Commonly Used Types:
+Microsoft.Data.Sqlite.SqliteCommand
+Microsoft.Data.Sqlite.SqliteConnection
+Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
+Microsoft.Data.Sqlite.SqliteDataReader
+Microsoft.Data.Sqlite.SqliteException
+Microsoft.Data.Sqlite.SqliteFactory
+Microsoft.Data.Sqlite.SqliteParameter
+Microsoft.Data.Sqlite.SqliteTransaction</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>SQLite Data ADO.NET</tags>
+    <serviceable>true</serviceable>
+    <repository type="git" url="https://github.com/aspnet/Microsoft.Data.Sqlite.git" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="SQLitePCLRaw.core" version="1.1.7" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

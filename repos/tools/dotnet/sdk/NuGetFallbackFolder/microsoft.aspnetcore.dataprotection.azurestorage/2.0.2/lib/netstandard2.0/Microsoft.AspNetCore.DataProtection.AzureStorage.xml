@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.DataProtection.AzureStorage</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.DataProtection.AzureStorage.AzureBlobXmlRepository">
+            <summary>
+            An <see cref="T:Microsoft.AspNetCore.DataProtection.Repositories.IXmlRepository"/> which is backed by Azure Blob Storage.
+            </summary>
+            <remarks>
+            Instances of this type are thread-safe.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureStorage.AzureBlobXmlRepository.#ctor(System.Func{Microsoft.WindowsAzure.Storage.Blob.ICloudBlob})">
+            <summary>
+            Creates a new instance of the <see cref="T:Microsoft.AspNetCore.DataProtection.AzureStorage.AzureBlobXmlRepository"/>.
+            </summary>
+            <param name="blobRefFactory">A factory which can create <see cref="T:Microsoft.WindowsAzure.Storage.Blob.ICloudBlob"/>
+            instances. The factory must be thread-safe for invocation by multiple
+            concurrent threads, and each invocation must return a new object.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureStorage.AzureBlobXmlRepository.GetAllElements">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureStorage.AzureBlobXmlRepository.StoreElement(System.Xml.Linq.XElement,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions">
+            <summary>
+            Contains Azure-specific extension methods for modifying a
+            <see cref="T:Microsoft.AspNetCore.DataProtection.IDataProtectionBuilder"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage(Microsoft.AspNetCore.DataProtection.IDataProtectionBuilder,Microsoft.WindowsAzure.Storage.CloudStorageAccount,System.String)">
+            <summary>
+            Configures the data protection system to persist keys to the specified path
+            in Azure Blob Storage.
+            </summary>
+            <param name="builder">The builder instance to modify.</param>
+            <param name="storageAccount">The <see cref="T:Microsoft.WindowsAzure.Storage.CloudStorageAccount"/> which
+            should be utilized.</param>
+            <param name="relativePath">A relative path where the key file should be
+            stored, generally specified as "/containerName/[subDir/]keys.xml".</param>
+            <returns>The value <paramref name="builder"/>.</returns>
+            <remarks>
+            The container referenced by <paramref name="relativePath"/> must already exist.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage(Microsoft.AspNetCore.DataProtection.IDataProtectionBuilder,System.Uri)">
+            <summary>
+            Configures the data protection system to persist keys to the specified path
+            in Azure Blob Storage.
+            </summary>
+            <param name="builder">The builder instance to modify.</param>
+            <param name="blobUri">The full URI where the key file should be stored.
+            The URI must contain the SAS token as a query string parameter.</param>
+            <returns>The value <paramref name="builder"/>.</returns>
+            <remarks>
+            The container referenced by <paramref name="blobUri"/> must already exist.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage(Microsoft.AspNetCore.DataProtection.IDataProtectionBuilder,Microsoft.WindowsAzure.Storage.Blob.CloudBlockBlob)">
+            <summary>
+            Configures the data protection system to persist keys to the specified path
+            in Azure Blob Storage.
+            </summary>
+            <param name="builder">The builder instance to modify.</param>
+            <param name="blobReference">The <see cref="T:Microsoft.WindowsAzure.Storage.Blob.CloudBlockBlob"/> where the
+            key file should be stored.</param>
+            <returns>The value <paramref name="builder"/>.</returns>
+            <remarks>
+            The container referenced by <paramref name="blobReference"/> must already exist.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage(Microsoft.AspNetCore.DataProtection.IDataProtectionBuilder,Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer,System.String)">
+            <summary>
+            Configures the data protection system to persist keys to the specified path
+            in Azure Blob Storage.
+            </summary>
+            <param name="builder">The builder instance to modify.</param>
+            <param name="container">The <see cref="T:Microsoft.WindowsAzure.Storage.Blob.CloudBlobContainer"/> in which the
+            key file should be stored.</param>
+            <param name="blobName">The name of the key file, generally specified
+            as "[subdir/]keys.xml"</param>
+            <returns>The value <paramref name="builder"/>.</returns>
+            <remarks>
+            The container referenced by <paramref name="container"/> must already exist.
+            </remarks>
+        </member>
+    </members>
+</doc>
