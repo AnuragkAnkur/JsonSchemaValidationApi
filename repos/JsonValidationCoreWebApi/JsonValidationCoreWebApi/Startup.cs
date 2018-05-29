@@ -27,7 +27,7 @@ namespace JsonValidationCoreWebApi
             Log.Logger = LoggerFactory
                             .CreateLogger();
 
-            services.AddTransient<ILogger>(provider => Log.Logger);
+            services.AddSingleton<ILogger>(provider => Log.Logger);
             services.AddSingleton<IJsonValidator, JsonValidator>();
             services.AddSingleton<IRestApiClient, RestApiClient>();
         }
