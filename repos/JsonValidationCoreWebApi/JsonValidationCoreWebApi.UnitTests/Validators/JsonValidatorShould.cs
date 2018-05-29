@@ -176,7 +176,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         }
 
         [Fact]
-        public void Return_MaximumItems_Error_When_Empty_Json_Is_Validated_With_Required_Min_Size_Array_Schema()
+        public void Return_MaximumItems_Error_When_A_Json_With_More_Than_Constrained_item_Is_Validated_With_MaxItem_Schema()
         {
             var schema = @"{
                               'type': 'array',
@@ -209,23 +209,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
             Assert.False(schemaValidationResult.SchemaValidationErrors.Any());
         }
 
-        [Fact]
-        public void Print_Encoutered_Null_Occurances()
-        {
-            var schema = @"{
-                            'type': 'array',
-                            'items': {'type': 'number'}
-                            }";
-
-            var json = @"[1, null, 1, 2]";
-
-            _jsonValidator.ValidateJsonAgainstSchema(schema, json);
-
-            _loggerMock.Verify(x => 
-                    x.Warning(It.IsAny<string>()),Times.Once());
-        }
-
-        [Fact]
+       [Fact]
         public void Return_MaximumProperties_Error_When_Json_Contains_More_Than_One_Property()
         {
             var schema = @"{
@@ -263,7 +247,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         }
 
         [Fact]
-        public void Return_Minimum_Type_Error_When_Json_Contains_Greater_Than_Constrained_Value()
+        public void Return_Minimum_Type_Error_When_Json_Contains_Less_Than_Constrained_Value()
         {
             var schema = @"{
                             'type': 'array',
@@ -281,7 +265,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         }
 
         [Fact]
-        public void Return_MultipleOf_Type_Error_When_Json_Contains_Greater_Than_Constrained_Value()
+        public void Return_MultipleOf_Type_Error_When_Json_Contains_Non_MultipleOf_Constrained_Value()
         {
             var schema = @"{
                             'type': 'array',
@@ -299,7 +283,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
         }
 
         [Fact]
-        public void Return_UniqueItem_Type_Error_When_Json_Contains_Greater_Than_Constrained_Value()
+        public void Return_UniqueItem_Type_Error_When_Json_Contains_Duplicate_Value()
         {
             var schema = @"{
                             'type': 'array',
