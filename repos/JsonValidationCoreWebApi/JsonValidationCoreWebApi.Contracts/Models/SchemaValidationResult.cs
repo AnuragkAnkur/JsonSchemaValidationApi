@@ -7,5 +7,7 @@ namespace JsonValidationCoreWebApi.Contracts.Models
         public List<SchemaValidationError> SchemaValidationErrors { get; set; }
 
         public int ParsedObjectsCount { get; set; }
+
+        public int NullOccurances { get; set; }
     }
 }

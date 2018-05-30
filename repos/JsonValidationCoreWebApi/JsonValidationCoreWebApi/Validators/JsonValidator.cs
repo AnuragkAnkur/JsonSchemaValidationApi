@@ -52,7 +52,8 @@ namespace JsonValidationCoreWebApi.Validators
 
             jsonData.IsValid(schema, out validationErrors);
 
-            var listOfErrors = FilterNullValueError(validationErrors);
+            int nullOccuranceCount = 0;
+            var listOfErrors = FilterNullValueError(validationErrors, ref nullOccuranceCount);
 
             var errorGroup = listOfErrors.GroupBy(x => x.ErrorType);
             foreach (var grouping in errorGroup)
@@ -63,15 +64,15 @@ namespace JsonValidationCoreWebApi.Validators
             var schemaValidationResult = new SchemaValidationResult
             {
                 SchemaValidationErrors = listOfErrors,
-                ParsedObjectsCount = parsedObjectsCount
+                ParsedObjectsCount = parsedObjectsCount,
+                NullOccurances = nullOccuranceCount
             };
 
             return schemaValidationResult;
         }
 
-        private List<SchemaValidationError> FilterNullValueError(IList<ValidationError> validationErrors)
+        private List<SchemaValidationError> FilterNullValueError(IList<ValidationError> validationErrors, ref int nullOccuranceCount)
         {
-            var nullOccuranceCount = 0;
             var listOfErrors = new List<SchemaValidationError>();
             foreach (var error in validationErrors)
             {

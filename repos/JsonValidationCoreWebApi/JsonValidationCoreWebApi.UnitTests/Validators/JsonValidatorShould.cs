@@ -206,6 +206,7 @@ namespace JsonValidationCoreWebApi.UnitTests.Validators
             var schemaValidationResult = _jsonValidator.ValidateJsonAgainstSchema(schema, json);
 
             Assert.Equal(4, schemaValidationResult.ParsedObjectsCount);
+            Assert.Equal(1, schemaValidationResult.NullOccurances);
             Assert.False(schemaValidationResult.SchemaValidationErrors.Any());
         }
 
