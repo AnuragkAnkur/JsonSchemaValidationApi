@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Newtonsoft.Json.Schema">
       <HintPath>..\..\..\..\.nuget\packages\newtonsoft.json.schema\3.0.10\lib\netstandard2.0\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
