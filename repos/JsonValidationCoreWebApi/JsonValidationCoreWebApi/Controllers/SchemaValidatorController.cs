@@ -41,7 +41,6 @@ namespace JsonValidationCoreWebApi.Controllers
             var responseContent = JsonConvert.SerializeObject(schemaValidationResult);
             if (schemaValidationResult.SchemaValidationErrors.Any())
             {
-                _logger.Error($"Validation Result: \n {responseContent}");
                 return new ContentResult()
                 {
                     StatusCode = 409,

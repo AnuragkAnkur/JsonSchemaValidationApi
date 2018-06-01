@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-using System.IO;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.WindowsServices;
 
 namespace JsonValidationCoreWebApi
 {
@@ -10,14 +7,12 @@ namespace JsonValidationCoreWebApi
     {
         public static void Main(string[] args)
         {
-            var pathToExe = Process.GetCurrentProcess().MainModule.FileName;
-            var pathToContentRoot = Path.GetDirectoryName(pathToExe);
-            var host = WebHost.CreateDefaultBuilder(args)
-                .UseContentRoot(pathToContentRoot)
+            BuildWebHost(args).Run();
+        }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
-
-            host.RunAsService();
-        }
     }
 }
