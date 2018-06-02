@@ -1,0 +1,27 @@
+FROM ubuntu
+MAINTAINER Anurag Kumar Ankur 
+RUN apt-get update
+RUN apt-get install gpg -y
+RUN apt-get install git -y
+RUN apt-get install wget -y
+RUN apt-get install sudo -y
+RUN apt-get install wget -y
+RUN apt-get install liblttng-ust0 -y
+RUN apt-get install libcurl3 -y
+RUN apt-get install libssl1.0.0 -y
+RUN apt-get install libkrb5-3 -y
+RUN apt-get install zlib1g -y
+RUN apt-get install libicu60 -y
+RUN apt-get install lsof -y
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
+RUN sudo mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
+RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list 
+RUN sudo mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
+RUN sudo chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+RUN sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+RUN sudo apt-get install apt-transport-https
+RUN sudo apt-get update
+RUN sudo apt-get install aspnetcore-runtime-2.1 -y
+RUN sudo apt-get install dotnet-sdk-2.1 -y
+RUN sudo apt-get install debootstrap -y
+EXPOSE 46999

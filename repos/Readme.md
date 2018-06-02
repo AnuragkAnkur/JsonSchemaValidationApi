@@ -52,7 +52,35 @@ The web API has got three main classes each responsible for the following purpos
      6. Start the service
      7. Run the acceptance tests.
 
+# **Run the Web Api on Linux vm using Docker**
+    1. Navigate to repos->tools->dockerfile folder
+    2. Run the Docker file to create image
+        docker build -t "dotnetcore:latest" .
+    3. Once the image is created run a container 
+        docker run -p 46998:46999 --interactive --tty dotnetcore bash
+    4. Create a directory to download the project
+        mkdir project
+        cd ./project
+    5. Clone the project from the Github
+        git clone https://github.com/AnuragkAnkur/JsonSchemaValidationApi.git
+    6. Navigate to repo directory
+        cd ./JsonSchemaValidationApi/repos
+    7. Give permision to the script file
+        chmod +x ./tools/BuildScript.sh
+    8. Run the Script
+        ./tools/BuildScript.sh
+        
+# list docker images
+    docker image ls
 
+# delete docker image
+    docker rmi ImageId -f
+
+# list all aontainers
+    docker ps -a
+
+# docker delete container
+    docker rm ContainerId -f
     
 # **Web API Request Example**
     Endpoint: http://localhost:5000/api/schemavalidator
