@@ -22,6 +22,12 @@ namespace JsonValidationCoreWebApi.Controllers
             _restApiClient = restApiClient;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return new OkResult();
+        }
+
         // POST api/schemavalidator
         [HttpPost]
         public IActionResult Post([FromBody] ValidateSchemaModel model)
